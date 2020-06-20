@@ -95,6 +95,7 @@ fn test_parse_complex() {
     assert_eq!(parse_complex(", -0.0625"), None);
 }
 
+<<<<<<< HEAD
 /// Given the row and column of a pixel in the aoutput image, return the
 /// corresponding point on the conplex plane.
 ///
@@ -154,6 +155,8 @@ fn render(pixels: &mut [u8],
 } 
 
 
+=======
+>>>>>>> master
 
 
 
