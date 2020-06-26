@@ -52,6 +52,14 @@ fn main() {
     print(&a[2..]);
     print(&sv[1..3]);
 
+    println!("In the room the woman come and go, \
+        singing of Mount Abora");
+    println!(r###"
+        This raw string started with 'r###'.
+        Therefore it does not end until we reach a quote mark ('"')
+        followed immediately by three pound signs ('###'):
+    "###);
+
 }
 
 fn print(n: &[f64]) {
