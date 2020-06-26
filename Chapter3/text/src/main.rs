@@ -60,6 +60,9 @@ fn main() {
         followed immediately by three pound signs ('###'):
     "###);
 
+    let method = b"GET";
+    assert_eq!(method, &[b'G', b'E', b'T']);
+
 }
 
 fn print(n: &[f64]) {
