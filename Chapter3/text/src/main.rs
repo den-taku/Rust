@@ -1,4 +1,11 @@
 fn main() {
+    let mut v: Vec<f64> = vec![0.0; 8];
+    println!("{}", v.len());
+    println!("{}", v.capacity());
+    let sv: &[f64] = &mut v;
+    println!("{}", sv.len());
+
+
     // let text = "I see the eigenvalue in thine eye";
     // let (head, tail) = text.split_at(21);
     // println!("{}",head);
