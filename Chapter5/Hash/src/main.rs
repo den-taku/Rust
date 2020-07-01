@@ -34,4 +34,19 @@ fn main() {
 
     show(&table);   
     assert_eq!(table["Gesualdo"][0], "many madrigals");
+
+    let x = 10;
+    let r = &x;
+    assert!(*r == 10);
+
+    let mut y = 32;
+    let m = &mut y;
+    *m += 32;
+    // assert!(*m == 32);
+
+    struct Anime { name: &'static str, bechdel_pass: bool };
+    let aria = Anime { name: "Aria: The Animarion", bechdel_pass: true };
+    let anime_ref = &aria;
+    assert_eq!(anime_ref.name, "Aria: The Animation"); 
+    assert_eq!((*anime_ref).name, "Aria: The Animation");
 }
