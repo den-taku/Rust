@@ -15,6 +15,8 @@ fn _smallest<'a>(v: &'a [i32]) -> &'a i32 {
     s
 }
 
+fn ff<'a, 'b>(r: &'a i32, s: &'b i32) -> &'a i32 { r }
+
 fn main() {
     f(&WORTH_POINTING_AT);
     let x = 1;
@@ -36,4 +38,35 @@ fn main() {
     struct _T<'hoge> {
         s: S<'hoge>
     }
+
+    struct U<'a, 'b> {
+        x: &'a i32,
+        y: &'b i32,
+    }
+
+    let x = 10;
+    let r;
+    {
+        let y = 20;
+        {
+            let s = U {x: &x, y: &y};
+            r = s.x;
+        }
+    }
+
+    struct StringTable {
+        elements: Vec<String>,
+    }
+
+    impl StringTable {
+        fn find_by_prefix<'a, 'b>(&'a self, prefix: &'b str) -> Option<&'a String> {
+            for i in 0..self.elements.len() {
+                if self.elements[i].starts_with(prefix) {
+                    return Some(&self.elements[i]);
+                }
+            }
+            None
+        }
+    }
+
 }
