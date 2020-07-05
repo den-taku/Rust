@@ -32,10 +32,68 @@ loop {
     ; // <-- empty statement
 }
 
+6.3 宣言
 
+ブロックには式とセミコロン以外に任意の数の宣言を書くことができる
 
+let name: type = expr;
+→セミコロンは必須
+→宣言だけして後から初期化することもできる
 
+２つ目の変数に１つめと同じ名前をつけるのは許されている
 
+ブロック内でアイテムの宣言(item declaration)を行うこともできる
+→アイテム:fn、struct、useなどのもの
+→→スコープはブロック内
+→→→ただしそのスコープ内の別のローカル変数を直接利用することはできない
+→→→→外側のスコープを見ることができるクロージャは14章で
+
+6.4 ifとmatch
+
+if condition1 {
+    block1
+} else if condition2 {
+    block2
+} else {
+    block_n
+}
+
+else ifもelseも省略可能
+→ない場合はからのelseブロックがあった場合と同じ挙動
+
+全てのブロックは同じ型の値を生成しなくてはならない
+
+match value {
+    pattern => expression,
+    ...
+}
+
+valueに対し個々のパターンを上から順に適応していきマッチするとexprを評価して終了
+→全てのケースをカバーしていないmatch式は許されない
+
+_はワイルドカード
+
+コンパイラはこの種のmatch式をジャンプテーブルにコンパイルして最適化
+定数値を返すときは定数値の配列を作り添字を与える
+
+patternには様々なものが使える→詳細は10章で
+
+expressionがブロックの時は分岐最後のカンマは省略可
+
+match式の分岐も全て同じ値でなくてはいけない
+
+6.4.1 if let式
+
+if let pattern = expr {
+    block1
+} else {
+    block2
+}
+
+与えられたexprがpatternにマッチするならblock1が実行されしなければblock2が実行
+OptionやResultからデータを取り出すのに便利
+
+if let式を使う厳密な必要性はない(match式でもできるので)
 
 
 
