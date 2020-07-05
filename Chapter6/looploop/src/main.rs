@@ -5,7 +5,6 @@ fn type_of<T>(_: T) ->String {
 
 fn looploop () -> ! {
     loop {
-        break;
     }
 }
 
@@ -45,5 +44,11 @@ fn main() {
             break;
         }
     }
-    println!("{}", type_of(loop { ; }));
+    println!("{}", 19023.23 % 100.0);
+    println!("{}",std::f32::INFINITY as u8);
+
+    let v = vec![1, 2, 3, 10];
+    for vec in v {
+        println!("{}", vec);
+    }
 }
