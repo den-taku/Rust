@@ -95,8 +95,54 @@ OptionやResultからデータを取り出すのに便利
 
 if let式を使う厳密な必要性はない(match式でもできるので)
 
+6.5 ループ
 
+Rustには４つのループ式がある
 
+while condition {
+    block
+}
+
+while let pattern = expression {
+    block
+}
+
+loop {
+    block
+}
+
+for pattern in collection {
+    block
+}
+
+ループの値は常に()
+
+loopは無限ループ
+→breakやreturnに到達するか、スレッドがパニックを起こすまで
+
+forループはcollection式を評価し、collectionに含まれる各値に対してblockを実行
+→様々なコレクション型をサポートしている
+
+..演算子:
+範囲(range)を生成する
+→0..20とstd::ops::Range { start: 0, end: 20}は同じ意味
+→→範囲はstd::iter::IntoIteratorを実装しているイテレート可能型(iterable)
+
+標準的なコレクションは全てイテレート可能となっている
+→→→詳しくは15章で
+
+値をforでループすると移動されてドロップされる
+→コレクションの参照に対してループすれば良い
+→→&mutを渡すこともできる
+
+forループに関しては15章で詳しく説明する
+
+break式はループ式の中でしか機能しない
+continue式を用いるとループの次の回に飛ぶ　
+
+ループに生存期間でラベル付け(labeled)することができる
+→break 'a;で'aの生存期間を持つループを中断できる
+→→continueにも使える(外側のコレクションを１つ進める)
 
 
 

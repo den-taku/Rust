@@ -22,6 +22,20 @@ fn main() {
         _ => println!("Unrecognized Error {}", code)
     }
  
-    let g = (let f = 32);
-    println!("{}", type_of(g));
+    // let g = (let f = 32);
+    // println!("{}", type_of(g));
+
+    for i in 1..20 {
+        println!("{}", i);
+    }
+
+    'a:
+    for i in 1..6 {
+        'b:
+        for j in 1..6 {
+            if i * j == 12 { continue 'a; } 
+            println!("{}", i * j); 
+            if i * j == 9 { break 'b; }
+        }
+    }
 }
