@@ -1,3 +1,7 @@
+fn f() {
+    return;
+}
+
 fn type_of<T>(_: T) ->String {
     let a = std::any::type_name::<T>();
     a.to_string()
@@ -36,6 +40,21 @@ fn main() {
             if i * j == 12 { continue 'a; } 
             println!("{}", i * j); 
             if i * j == 9 { break 'b; }
+        }
+    }
+    let a = {
+        for i in 1..20 {
+            if i == 18 {
+                return ();
+            }
+        }
+    };
+    loop {
+        let mut i = 0;
+        i += 1;
+        println!("{}", i);
+        if i == 30 {
+            return;
         }
     }
 }
