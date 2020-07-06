@@ -55,16 +55,114 @@ abortするのは次のふた通り
 
 通常のRustのコードはpanicを処理する義務を負わない
 
+7.2 Result
 
+Rustには例外がない
+→失敗する可能性のある関数は返り値の型でそのことを示す
 
+Result型
+成功結果Ok(v)かエラー結果Err(e)を返す
+→定義は10章で
 
+Result型を返す関数にはなんらかのエター処理を行うことを求める
+→何もしないでv(値)に到達することはできない
 
+7.2.1 エラーの補足
 
+最もしっかりとResultを扱う
+→match式を使う
+→→他言語のtry/catch構文に相当
+→→少し冗長になる
 
+様々なケースに対応したメソッドがResult<T, E>には用意されている
+→これらは全てmatch式で実装されている
+→完全なリストはドキュメントを参照
 
+result.is_ok()、result.is_err():
+resultの成否をboolで返す
 
+result.ok():
+成功した場合の値をOption<T>として返す(Some(success_value) or None)
 
+result.err():
+失敗した場合の値をOption<Err>として返す
 
+result.unwrap_or(fallback):
+result成功->成功値、失敗->デフォルト値fallback
+
+result.unwrap_or_else(fallback_fn):
+result.unwrap_or(fallback)とほぼ同じだが関数かクロージャを渡す。処理を必要時に
+
+result.unwrap():
+成功時には成功値を返す。失敗時にはパニックを起こす
+
+result.expect(message):
+.unwrap()とほぼ同じだがpanic時にメッセージを指定できる
+
+Resultの中の値への参照を借用するメソッドを2つ紹介
+
+result.as_ref():
+成功値またはエラー値をresultから借用してResult<T, E>をResult<&T, &E>に変換
+
+result.as_mut():
+ほとんど同じだが可変借用を借用する Result<&mut T, &mut E>
+
+→.is_ok()、.is_err()以外はresultを消費してしまう(selfを値として引数にとる)
+→.as_ref()、.as_mut()はresultを壊さずに取り出せる
+→→result.as_ref().ok()のようにすることで値を壊さずに扱える
+
+7.2.2 Result型のエイリアス
+
+エラー型のないResult型Result<()>
+→Result型のエイリアスが使われている
+
+型エイリアス:
+型名の省略形。エラー型を省略して利用できる
+
+7.2.3 エラーの伝搬
+
+多くの場合起きたエラーの処理は呼び出しもとに任せたい
+→つまり呼び出しスタックを遡って伝搬させたい
+
+?演算子
+→Result型を生成する任意の式に対して伝搬をサポート
+
+?の挙動は成否に依存して変化する
+
+成功時
+→Resultを用いて中の成功値を取り出す
+
+失敗値
+→呼び出し元の関数から即時リターンし呼び出し連鎖上流の関数にエラーを渡す
+→→返り値がReturn型の関数内部でしか利用できない
+
+let wether = match get_wether(hometown) {
+    Ok(success_value) => success_value,
+    Err(err) => return Err(err)
+};
+→わずかに?演算子とは挙動が異なる
+
+try!()マクロ
+→?演算子導入以前によく用いられたエラー伝搬方法
+→上に示すmatch式に変換される
+
+OSに関わるコードではどこでもエラーが生じ得るので?がいっぱい!
+
+7.2.5 複数種類のエラーへの対応
+
+複数種類のエラーが返ってくる場合
+
+・各エラー型から独自定義型へ変換を実装(error-chain crate等)
+
+・stlのエラー型を全て変換可能なBox<std::error::Error>に変換
+→呼び出し側が予期しているエラーが厳密には何なのかを表現する方法がなくなる
+
+?演算子は自動変換を標準メソッド::from()を用いて行う
+13章でFromトレイトとfrom()メソッドについて詳しく説明する
+
+特定の種類のエラーだけ対処して残りは上に伝搬させたい
+→error.downcast_ref::<ErrorType>()を使う
+多くの言語は構文としてこれを持つがRustはメソッドとして用いる
 
 
 
