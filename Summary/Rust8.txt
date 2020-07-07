@@ -128,6 +128,7 @@ use宣言:
 
 moduleは親moduleの名前空間を自動的に引き継がない
 →個々のmoduleは白紙状態から始まるので利用する名前をインポートする必要がある
+→同一crate内にネストしても白紙からスタート
 
 super:親moduleのエイリアス
 self:現在のmoduleのエイリアス
@@ -142,11 +143,84 @@ moduleとfileは同じではないが類似関係がある
 
 8.2.3 標準のプレリュード
 
+namaspeceは「完全に」白紙というわけではない
 
+stdlibは自動的に全てのprojectにlinkされる
+→extern crate std;が暗黙のうちにされていると思えば良い
 
+さらにVecやResultなどのよく使われるものは標準のpreludeに含まれている
+→自動的にimportされる
+→use std::prelude::v1::*;のようなimport宣言があるかのように振る舞う
 
+標準prelude:
+数ダースの広く使われているtraitやtypeが含まれている
+→ただしstdは含まれていないのでuse std;は明示的に
+→→普通はstdの特定の利用する機能だけimport
 
+preludeという名前のmoduleを提供するライブラリ
+→自動的にはインポートされない。prelude::*でimportしてほしいという慣習でしかない
 
+8.2.4 Rustの構成要素:アイテム
+
+moduleはitemで構成される
+→この言語の主要機能は全てitemだと考えて良い
+
+fnction
+→既
+
+type
+
+→ユーザ定義型はキーワードstruct、enum、traitを用いて導入する(それぞれ各章で)
+→→構造体のフィールドはprivateフィールドでもその構造体がdefされたmodule内部からはaccessable
+→→moduleの外からはpublicフィールドだけがアクセス可能
+
+→アクセス制御をclassでなくmoduleにしたことで楽に設計できる
+→→複数の型を1つのmoduleに定義できるので
+
+型alias
+
+→typeキーワードを用いて古い型に新しい名前を宣言できる
+
+implブロック
+
+→型にメソッドを付加する(詳しくは9章)
+→implブロック全体をpubにすることはできない
+→→個々のメソッドを外部から使うにはメソッドごとpubにする
+→→privateメソッドは宣言されているmodule全体から見える
+
+定数
+
+→constキーワードを用いる
+→必要ならpubがつき、必ず型指定する点がletと異なる
+→→慣用的に全て大文字でかきアンダースコアで区切る
+→→→値を使う全ての場所に値がコンパイル時に埋め込まれる
+→→→マジックナンバーやマジック文字列には定数を使う
+→→→→ummutable
+
+→staticキーワードがstatic itemを導入
+→→定数とほぼ同じ
+→→→プログラム実行開始前に用意され終了するまで生き残る変数
+→→→定数値への参照を借用する必要があるなら(データが大きい等)
+→mutableだが排他的なアクセスを強制する方法がないので安全なコードからは使えない
+
+→Rustではグローバル可変は推奨されない(詳しくは19.3.11 グローバル変数)
+
+module
+
+→moduleはsubmoduleから構成されpublicとprivateがある
+
+import
+
+→use宣言やextern crate宣言もアイテム
+→→publicにできる(別名をつけるだけ)
+→→→pub use self::leaves::LeafとするとLeafがpublic itemになる
+
+externブロック
+
+→他の言語で書かれた一連のコードを宣言してRustから呼び出せるようにする(21章で)
+
+Rustでは使われていないitemがあると警告を出力する
+→他のcrateで使う場合、itemの外側の全てのmoduleをpublicにする必要がある
 
 
 
