@@ -86,10 +86,61 @@ mod parent {
 
 8.2.1 モジュールの複数ファイルへの分割
 
+mod spores;
+→このようにもモジュールは書ける
+→sporesモジュールがspores.rsに入っていることをコンパイラに知らせる
+→spores.rsにはモジュールを構成するアイテムだけが書かれる
 
+２つの違いはコードが置かれる場所だけ
 
+モジュールをディレクトリで構成することもできる
+→mod spores;宣言文を見るとspores.rsとspores/mod.rsの両方をチェックする
+→→両方ない、または両方あるときはエラーになる
 
+fern_sim/
+    Cargo.toml
+    srs/
+        main.rs ← pub mod plant_structures;
+        spores.rs
+        plant_structures/
+            mod.rs
+            leaves.rs
+            roots.rs
+            sterms.rs
 
+// in plant_suructures/mod.rs
+pub mod roots;
+pub mod sterms;
+pub mod leaves;
+
+8.2.2 パスとインポート
+
+::演算子
+→モジュールの機能にアクセスするために用いる
+→→プロジェクト内の任意の標準ライブラリの機能を絶対パスで参照可能
+→→→ ::std::mem::swap()とか(::stdはトップレベルモジュール)
+
+use宣言:
+使いたい機能をimportする
+→宣言しているblockもしくはmodule全体で局所的なエイリアスとして使えるようになる
+→use std::mem; で memを使えるようになる
+→→一般的にはtypeやtraitやmoduleをimportして相対パスを用いる方が良いスタイル
+
+moduleは親moduleの名前空間を自動的に引き継がない
+→個々のmoduleは白紙状態から始まるので利用する名前をインポートする必要がある
+
+super:親moduleのエイリアス
+self:現在のmoduleのエイリアス
+→相対パスを指定できる
+→親moduleのプライベートアイテムにはそれぞれ個別にimportすればアクセスできる
+→→use super::*;ではpublic itemしかimportされない
+
+moduleとfileは同じではないが類似関係がある
+→useはlnで作るリンクのようなエイリアスを作る
+→selfとsuperはスペシャルディレクトリ.と..に似ている
+→extern crateは別のcrateのroot moduleを自分のprojectに接ぎ木する(マウントに似ている)
+
+8.2.3 標準のプレリュード
 
 
 
