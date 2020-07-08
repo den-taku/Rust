@@ -228,17 +228,30 @@ Rustでは使われていないitemがあると警告を出力する
 ・共通コードを全て納めたlibrary crate
 ・コマンドラインプログラムのためだけに必要なコードを収めた実行ファイル
 
-ライブラリへの変更方(fern)
+ライブラリへの変更方(fern_sim)
 ・src/main.rsをsrc/lib.rsに変更
 ・src/main.rs中のpublicにすべき機能にpubキーワードを付加
 ・main関数を一時ファイルに避けておく
 →Cargo.tomlを変更する必要がない(defaultで最低限の動作を保証)
+→→ソースファイルを見て何をするか決定する
 
 src/lib.rsがライブラリのroot moduleを構成する
 →このライブラリを用いる他のcrateはこれのpublic itemしかアクセスできない
 
+8.4 src/binディレクトリ
 
+programとlibraryを同じコードベース内に書く機構をサポート
+→ Cagroの大半はlibraryで呼び出すことでcargoしてる
 
+main関数はsrc/bin/の中に書きextern crateでfern_simをリンクしuseでimport
+→cargo run --bin efernのようにして実行する
+
+ここでもCargo.tomlは変更していない
+→src/binディレクトリの.rsファイルを自動的にビルドすべきprogramだとみなす
+
+他の方法をしてはfern_simを別のディレクトリにおいて独立した別のprojectにもできる
+→Cargo.tomlには[dependencies]にfern_sim = {path="../fern_sim"}と書く
+→→src/binディレクトリを使う方法は簡単なプログラムを作るのだけに適している
 
 
 
