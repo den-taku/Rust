@@ -253,7 +253,49 @@ main関数はsrc/bin/の中に書きextern crateでfern_simをリンクしuseで
 →Cargo.tomlには[dependencies]にfern_sim = {path="../fern_sim"}と書く
 →→src/binディレクトリを使う方法は簡単なプログラムを作るのだけに適している
 
+8.5 属性
 
+Rustプログラム中のitemはどれも属性を付加できる
+
+属性(attributes):
+コンパイラへの指示を書くための構文
+
+#[allow(...)]:コンパイルの警告を無視
+
+#[cfg()]:条件付きコンパイル
+→完全な構文リストはRust言語仕様(https://doc.rust-lang.org/refernce.html#conditional-compilation)に
+
+一般的なオプション            
+#[cfg(...)]                    有効になる場合
+test                           テストが有効(cargo testかrustc --test)
+dubug_assertions               debug_assertionが有効
+unix                           Unix(macOS含む)がターゲット
+windows                        Windowsがターゲット
+target_pointer_width =  "64"   64bitがターゲット
+target_arch = "x86_64"         x86-64がターゲット
+terget_os = "macos"            macOSがターゲット
+feature = "robots"             ユーザ定義feature"robots"が有効([feature]に書く)
+not(A)                         Aが満たされない
+all(A,B)                       AおよびBが満たされる
+any(A,B)                       AまたはBが満たされる
+
+→詳しくはP170
+
+#[inline]:
+関数のインライン展開をコンパイラに任せず細かく制御
+→#[inline]をつけないとインライン展開が行われない場合がある
+→→別のcrateから使うときにジェネリックであるか#[inline]が付いていないとされない
+→→→#[inline(always)]や#[inline(never)]も用意されている
+
+一部のattributesはmodule全体に付加してその中のitem全てに適用できる
+→#[test]や#[inline]などは個々でつける
+
+それぞれの属性の詳しい引数リストはRustのreference docに書かれている
+→htttp://doc.rust-lang.org/reference/attributes.html
+
+属性をcrate全体に付与するにはfileの先頭、他のitemの前に書く
+#ではなく#!を用いる
+→#![feature]とか(安定化されていない時)
 
 
 
