@@ -222,8 +222,20 @@ externブロック
 Rustでは使われていないitemがあると警告を出力する
 →他のcrateで使う場合、itemの外側の全てのmoduleをpublicにする必要がある
 
+8.3 プログラムからライブラリへ
 
+既存のプロジェクトを２つの部分に分離する
+・共通コードを全て納めたlibrary crate
+・コマンドラインプログラムのためだけに必要なコードを収めた実行ファイル
 
+ライブラリへの変更方(fern)
+・src/main.rsをsrc/lib.rsに変更
+・src/main.rs中のpublicにすべき機能にpubキーワードを付加
+・main関数を一時ファイルに避けておく
+→Cargo.tomlを変更する必要がない(defaultで最低限の動作を保証)
+
+src/lib.rsがライブラリのroot moduleを構成する
+→このライブラリを用いる他のcrateはこれのpublic itemしかアクセスできない
 
 
 

@@ -1,0 +1,8 @@
+fn main() {
+    let mut fern = Fern {
+        size: 1.0,
+        growth_rate: 0.001
+    };
+    run_simulation(&mut fern, 10000);
+    println!("final fern size: {}", fern.size);
+}
