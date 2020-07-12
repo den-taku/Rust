@@ -249,7 +249,7 @@ main関数はsrc/bin/の中に書きextern crateでfern_simをリンクしuseで
 ここでもCargo.tomlは変更していない
 →src/binディレクトリの.rsファイルを自動的にビルドすべきprogramだとみなす
 
-他の方法をしてはfern_simを別のディレクトリにおいて独立した別のprojectにもできる
+他の方法としてはfern_simを別のディレクトリにおいて独立した別のprojectにもできる
 →Cargo.tomlには[dependencies]にfern_sim = {path="../fern_sim"}と書く
 →→src/binディレクトリを使う方法は簡単なプログラムを作るのだけに適している
 
@@ -325,7 +325,7 @@ Rustのテストツール
 
 8.6.1 結合テスト
 
-結合てすと
+結合テスト
 →srcディレクトリのtestsディレクトリに.rsファイルとして書く
 →cargo testを実行すると個々の結合テストを独立したcrateとしてコンパイル
 →→crateを外部ユーザ目線で扱えること(extern宣言が必要になる)
