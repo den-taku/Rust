@@ -323,6 +323,16 @@ assert!マクロやassert_eq!マクロを用いてテストする
 Rustのテストツール
 →複数のスレッドを用いて複数のテストを同時に行う(RUST_TEST_THREADSを1にすれば避けられる)
 
+8.6.1 結合テスト
+
+結合てすと
+→srcディレクトリのtestsディレクトリに.rsファイルとして書く
+→cargo testを実行すると個々の結合テストを独立したcrateとしてコンパイル
+→→crateを外部ユーザ目線で扱えること(extern宣言が必要になる)
+
+cagro testすると単体テストと結合テストの両方が実行される
+→あるファイルに書かれた結合テストのみ実行するときは
+→cargo test --test unfurlなど(tests/unfuel.rsをテストする場合)
 
 
 
