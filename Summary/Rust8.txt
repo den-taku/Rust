@@ -373,64 +373,81 @@ main関数やextern crate宣言を含むサンプルプログラム
 ```ignore HogeHoge ```: コンパイルも実行もしない
 ```languagename fo ```: languagenameのコードの時
 
+8.7 依存ライブラリの指定
 
+プロジェクトが依存するcrateの取得先をCargoに指定する方法
+→例えばバージョン番号を指定する
+→→iamge = "0.6.1"
 
+GitレポジトリのURLとリビジョンをかく
+→image = { git = "https://github.com/Pition/image.git", rev = "528f19c" }
+→→利用したいrev、tag、branchを指定することができる
 
+crateのソースコードが存在するディレクトリを指定する
+→image = { path = "vendor/image" }
 
+OScrateの機能が欲しているものと違えばForkして修正すれば良い
 
+8.7.1 バージョン
 
+Cargoは指定されたバージョンと互換性があるもっとも最新のバージョンを利用
+→互換性ルールはSemantic Versining(http://semver.org/)から採用(x.y.z)
 
+演算子を用いて厳密に指定したり範囲指定できる
+→例えば"=x.y.z"や">x.y.z <u.v.w"など
+→→ワイルドカード*も使用可能
 
+8.7.2 Cargo.lock
 
+Cargo.lock
+→最初にbuildした時に生成
+→buildのたびにバージョン変更することを防ぐ
+→→切り替わるのはCargo.tomlを変更した時とcargo updateをした時のみ
 
+Cargo.lockをバージョン管理の対象をしてコミットすると依存ライブラリ更新記録になる
+プロジェクトがライブラリの場合はコミットする必要がない
 
+8.8 クレートのcrates.ioでの公開
 
+簡単にできる
 
+cargo package
 
+・ライブラリのすべてのソースとCargo.tomlを含むファイルを作る
+→hoge_hoge-0.1.0.crate
+→このファイルをcrates.ioにアップロードする
 
+・ファイルからbuildしてチェックする
 
+ライセンスについては警告文のURLを参照すること
+mail addressには注意
 
+path指定したライブラリはpathが無視される
+→バージョン番号を指定すれば良い
+→→両方指定することもできる
 
+crateを公開するにはcrate.ioにログインしてAPIキーを取得する必要がある
+→詳細はP183
 
+cargo publish
+→公開!
 
+8.9 ワークスペース
 
+ビルドディレクトリtarget:
+それぞれのcrateが依存するものが独立して置いてある
 
+Cargoのワークスペースを使えばコンパイル時間とディスクスペースを節約可能
+→共通のビルドディレクトリとCargo.lockを共有するcrateの集合
 
+ルートディレクトリにCargo.tomlファイルを置いて以下のように書く
+[workspace]
+mumbers = ["hoge", "foo", "bar"]
+→"mogu"はサブディレクトリ名
+→サブディレクトリのCalgo.lockやtargetは消しておく
 
+cargo build --allのように--allオプションが使える
 
+8.10 もっといいもの
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Rustコミュニティが用意した細々したものが他にもある
