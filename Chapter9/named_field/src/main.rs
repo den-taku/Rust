@@ -40,6 +40,8 @@ fn chop(b: Broom) -> (Broom, Broom) {
 
 struct Bounds(usize, usize);
 
+struct Onesuch;
+
 fn main() {
     let tmp = ("hi".to_string(), 370i32);
     let (head, body) = ("Hey".to_string(), "PPAP".to_string());
@@ -74,6 +76,8 @@ fn main() {
     for i in 0..2 {
         println!("{}", image_bounds.0);
     }
+
+    let _o = Onesuch;
 
     println!("Hello, world!");
 }
