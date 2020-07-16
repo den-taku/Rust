@@ -38,7 +38,14 @@ fn chop(b: Broom) -> (Broom, Broom) {
     (bloom1, bloom2)
 }
 
+struct Bounds(usize, usize);
+
 fn main() {
+    let tmp = ("hi".to_string(), 370i32);
+    let (head, body) = ("Hey".to_string(), "PPAP".to_string());
+    println!("{}", tmp.0);
+    println!("{}", body);
+ 
     let width = 1024;
     let height = 576;
     let image = GrayscaleMap {
@@ -61,6 +68,12 @@ fn main() {
     assert_eq!(hokey1.health, 100);
     assert_eq!(hokey2.name, "Hokey II");
     assert_eq!(hokey2.health, 100);
+
+    let image_bounds = Bounds(1024,768);
+    assert_eq!(image_bounds.0 * image_bounds.1, 786432);
+    for i in 0..2 {
+        println!("{}", image_bounds.0);
+    }
 
     println!("Hello, world!");
 }
