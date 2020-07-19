@@ -1,3 +1,5 @@
+use std::cell::RefCell;
+
 struct Extrema<'elt> {
     greatest: &'elt i32,
     least: &'elt i32
@@ -29,6 +31,17 @@ fn main() {
     let p = Point { x:3.2, y:3.2 };
     let q = p;
     println!("{}", p.x);
+
+    let ref_cell: RefCell<String> = RefCell::new("hello".to_string());
+   
+    {
+        let r = ref_cell.borrow();
+        let count = r.len();
+        assert_eq!(count, 5);
+    }
+
+    let mut w = ref_cell.borrow_mut();
+    w.push_str(" world");
 
     println!("Hello, world!");
 }
