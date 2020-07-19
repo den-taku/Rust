@@ -14,11 +14,21 @@ fn find_extrema<'s>(slice: &'s [i32]) -> Extrema<'s> {
     Extrema { greatest, least }
 }
 
+#[derive(Copy, Clone, Debug, PartialEq)]
+struct Point {
+    x: f64,
+    y: f64
+}
+
 fn main() {
     let a = [0, -3, 0, 15, 48];
     let e = find_extrema(&a);
     assert_eq!(*e.least, -3);
     assert_eq!(*e.greatest, 48);
+
+    let p = Point { x:3.2, y:3.2 };
+    let q = p;
+    println!("{}", p.x);
 
     println!("Hello, world!");
 }
