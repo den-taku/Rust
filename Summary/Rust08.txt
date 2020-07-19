@@ -1,0 +1,453 @@
+8章クレートとモジュール
+
+クレートとモジュール
+→プログラムを構造化
+
+ドキュメントの書き方、テストの仕方、コンパイラエラー制御、依存関係とバージョン管理、OSLibraryなどなど
+
+8.1 クレート
+
+Rustプログラムはクレートで構成される
+→全てのソースコードやテスト、設定やツールなど全てが収められる
+
+ライブラリはクレートとして配布されている
+→依存関係を見たければ cargo build --verbose
+
+extern crate ...;
+→...が外部ライブラリであることをコンパイラに宣言
+
+[dependencies]
+→そのプロジェクトが使うクレートを示す
+
+クレートはcrate.io(http://crate.io/)にある
+→個々のクレートのページにはdocやsrcへのリンクと設定行が提供されている
+
+クレートのダウンロード→Cargo.tomlからさらにクレートをダウンロード→全てのクレートをコンパイル
+
+ライブラリのコンパイルには --crate-type libを用いる
+→main()関数を探さず.rlibファイルを作る
+
+本体のプログラムのコンパイルには --crate-type binを用いる
+→結果はターゲット環境のバイナリ実行ファイル
+
+rustcコマンドを実行する時に--externオプションでライブラリファイル名を指定
+→rustcにコンパイル済みクレートの場所を教える
+→→.rlibファイルは最終的な実行ファイルに静的にリンクする
+
+cargo buildには様々なオプションがある
+→例えば--releaseは最適化するがコンパイルに時間がかかる。少し粗い
+
+8.1.1 ビルドプロファイル
+
+Cargo.tomlファイルの設定でcargoが生成するrustcのコマンドラインを制御できる
+
+-command line-          -section in Cargo.toml-            
+cargo build             [profile.dev]
+cargo build --release   [profile.release]
+cargo test              [profile.test]
+
+プロファイラ:
+プログラムのどこでCPU時間を使っているかを測定するツール
+→良いデータを取るには最適化を行いデバッグシンボルがつくようにコンパイル
+→→ただしこれらはそれぞれリリースビルド、デバッグビルドでしか有効でない
+→→→debugはrustcに-gオプションをつけるかどうか制御
+
+様々な設定方法がCargo (http://doc.crates.io/manifest.html)のdocに
+
+8.2 モジュール
+
+モジュール(module):
+Rustの名前空間。プログラムやライブラリの関数、型、定数などのコンテナ
+
+mod name {
+...
+}
+
+クレート→プロジェクト間のコード共有
+モジュール→プロジェクト内部のコード構造化
+
+モジュールはアイテムの集合体
+→アイテム:名前のついた機能(構造体や関数など)
+
+pubキーワード
+→モジュールの外からアクセスできるようにアイテムをパブリックにする
+→→pubがついていないものは全てプライベートとなる
+
+moduleはネストにすることができる
+
+mod parent {
+    pub mod child {
+    ...
+    }
+}
+
+このようにmoduleの階層全体と大量のコードからなるプログラム全体を１つにすることもできる
+→ただし別のスマートな方法が用意されている
+
+8.2.1 モジュールの複数ファイルへの分割
+
+mod spores;
+→このようにもモジュールは書ける
+→sporesモジュールがspores.rsに入っていることをコンパイラに知らせる
+→spores.rsにはモジュールを構成するアイテムだけが書かれる
+
+２つの違いはコードが置かれる場所だけ
+
+モジュールをディレクトリで構成することもできる
+→mod spores;宣言文を見るとspores.rsとspores/mod.rsの両方をチェックする
+→→両方ない、または両方あるときはエラーになる
+
+fern_sim/
+    Cargo.toml
+    srs/
+        main.rs ← pub mod plant_structures;
+        spores.rs
+        plant_structures/
+            mod.rs
+            leaves.rs
+            roots.rs
+            sterms.rs
+
+// in plant_suructures/mod.rs
+pub mod roots;
+pub mod sterms;
+pub mod leaves;
+
+8.2.2 パスとインポート
+
+::演算子
+→モジュールの機能にアクセスするために用いる
+→→プロジェクト内の任意の標準ライブラリの機能を絶対パスで参照可能
+→→→ ::std::mem::swap()とか(::stdはトップレベルモジュール)
+
+use宣言:
+使いたい機能をimportする
+→宣言しているblockもしくはmodule全体で局所的なエイリアスとして使えるようになる
+→use std::mem; で memを使えるようになる
+→→一般的にはtypeやtraitやmoduleをimportして相対パスを用いる方が良いスタイル
+
+moduleは親moduleの名前空間を自動的に引き継がない
+→個々のmoduleは白紙状態から始まるので利用する名前をインポートする必要がある
+→同一crate内にネストしても白紙からスタート
+
+super:親moduleのエイリアス
+self:現在のmoduleのエイリアス
+→相対パスを指定できる
+→親moduleのプライベートアイテムにはそれぞれ個別にimportすればアクセスできる
+→→use super::*;ではpublic itemしかimportされない
+
+moduleとfileは同じではないが類似関係がある
+→useはlnコマンドで作るリンクのようなエイリアスを作る
+→selfとsuperはスペシャルディレクトリ.と..に似ている
+→extern crateは別のcrateのroot moduleを自分のprojectに接ぎ木する(マウントに似ている)
+
+8.2.3 標準のプレリュード
+
+namaspeceは「完全に」白紙というわけではない
+
+stdlibは自動的に全てのprojectにlinkされる
+→extern crate std;が暗黙のうちにされていると思えば良い
+
+さらにVecやResultなどのよく使われるものは標準のpreludeに含まれている
+→自動的にimportされる
+→use std::prelude::v1::*;のようなimport宣言があるかのように振る舞う
+
+標準prelude:
+数ダースの広く使われているtraitやtypeが含まれている
+→ただしstdは含まれていないのでuse std;は明示的に
+→→普通はstdの特定の利用する機能だけimport
+
+preludeという名前のmoduleを提供するライブラリ
+→自動的にはインポートされない。prelude::*でimportしてほしいという慣習でしかない
+
+8.2.4 Rustの構成要素:アイテム
+
+moduleはitemで構成される
+→この言語の主要機能は全てitemだと考えて良い
+
+fnction
+→既
+
+type
+
+→ユーザ定義型はキーワードstruct、enum、traitを用いて導入する(それぞれ各章で)
+→→構造体のフィールドはprivateフィールドでもその構造体がdefされたmodule内部からはaccessable
+→→moduleの外からはpublicフィールドだけがアクセス可能
+
+→アクセス制御をclassでなくmoduleにしたことで楽に設計できる
+→→複数の型を1つのmoduleに定義できるので
+
+型alias
+
+→typeキーワードを用いて古い型に新しい名前を宣言できる
+
+implブロック
+
+→型にメソッドを付加する(詳しくは9章)
+→implブロック全体をpubにすることはできない
+→→個々のメソッドを外部から使うにはメソッドごとpubにする
+→→privateメソッドは宣言されているmodule全体から見える
+
+定数
+
+→constキーワードを用いる
+→必要ならpubがつき、必ず型指定する点がletと異なる
+→→慣用的に全て大文字でかきアンダースコアで区切る
+→→→値を使う全ての場所に値がコンパイル時に埋め込まれる
+→→→マジックナンバーやマジック文字列には定数を使う
+→→→→ummutable
+
+→staticキーワードがstatic itemを導入
+→→定数とほぼ同じ
+→→→プログラム実行開始前に用意され終了するまで生き残る変数
+→→→定数値への参照を借用する必要があるなら(データが大きい等)
+→mutableだが排他的なアクセスを強制する方法がないので安全なコードからは使えない
+
+→Rustではグローバル可変は推奨されない(詳しくは19.3.11 グローバル変数)
+
+module
+
+→moduleはsubmoduleから構成されpublicとprivateがある
+
+import
+
+→use宣言やextern crate宣言もアイテム
+→→publicにできる(別名をつけるだけ)
+→→→pub use self::leaves::LeafとするとLeafがpublic itemになる
+
+externブロック
+
+→他の言語で書かれた一連のコードを宣言してRustから呼び出せるようにする(21章で)
+
+Rustでは使われていないitemがあると警告を出力する
+→他のcrateで使う場合、itemの外側の全てのmoduleをpublicにする必要がある
+
+8.3 プログラムからライブラリへ
+
+既存のプロジェクトを２つの部分に分離する
+・共通コードを全て納めたlibrary crate
+・コマンドラインプログラムのためだけに必要なコードを収めた実行ファイル
+
+ライブラリへの変更方(fern_sim)
+・src/main.rsをsrc/lib.rsに変更
+・src/main.rs中のpublicにすべき機能にpubキーワードを付加
+・main関数を一時ファイルに避けておく
+→Cargo.tomlを変更する必要がない(defaultで最低限の動作を保証)
+→→ソースファイルを見て何をするか決定する
+
+src/lib.rsがライブラリのroot moduleを構成する
+→このライブラリを用いる他のcrateはこれのpublic itemしかアクセスできない
+
+8.4 src/binディレクトリ
+
+programとlibraryを同じコードベース内に書く機構をサポート
+→ Cagroの大半はlibraryで呼び出すことでcargoしてる
+
+main関数はsrc/bin/の中に書きextern crateでfern_simをリンクしuseでimport
+→cargo run --bin efernのようにして実行する
+
+ここでもCargo.tomlは変更していない
+→src/binディレクトリの.rsファイルを自動的にビルドすべきprogramだとみなす
+
+他の方法としてはfern_simを別のディレクトリにおいて独立した別のprojectにもできる
+→Cargo.tomlには[dependencies]にfern_sim = {path="../fern_sim"}と書く
+→→src/binディレクトリを使う方法は簡単なプログラムを作るのだけに適している
+
+8.5 属性
+
+Rustプログラム中のitemはどれも属性を付加できる
+
+属性(attributes):
+コンパイラへの指示を書くための構文
+
+#[allow(...)]:コンパイルの警告を無視
+
+#[cfg()]:条件付きコンパイル
+→完全な構文リストはRust言語仕様(https://doc.rust-lang.org/refernce.html#conditional-compilation)に
+
+一般的なオプション            
+#[cfg(...)]                    有効になる場合
+test                           テストが有効(cargo testかrustc --test)
+dubug_assertions               debug_assertionが有効
+unix                           Unix(macOS含む)がターゲット
+windows                        Windowsがターゲット
+target_pointer_width =  "64"   64bitがターゲット
+target_arch = "x86_64"         x86-64がターゲット
+terget_os = "macos"            macOSがターゲット
+feature = "robots"             ユーザ定義feature"robots"が有効([feature]に書く)
+not(A)                         Aが満たされない
+all(A,B)                       AおよびBが満たされる
+any(A,B)                       AまたはBが満たされる
+
+→詳しくはP170
+
+#[inline]:
+関数のインライン展開をコンパイラに任せず細かく制御
+→#[inline]をつけないとインライン展開が行われない場合がある
+→→別のcrateから使うときにジェネリックであるか#[inline]が付いていないとされない
+→→→#[inline(always)]や#[inline(never)]も用意されている
+
+一部のattributesはmodule全体に付加してその中のitem全てに適用できる
+→#[test]や#[inline]などは個々でつける
+
+それぞれの属性の詳しい引数リストはRustのreference docに書かれている
+→htttp://doc.rust-lang.org/reference/attributes.html
+
+属性をcrate全体に付与するにはfileの先頭、他のitemの前に書く
+#ではなく#!を用いる
+→#![feature]とか(安定化されていない時)
+
+8.6 テストとドキュメント
+
+簡単なユニットテストフレームワークが組み込まれている
+
+#[test]属性
+→cargo testすると全てのテストが実行される
+→→実行ファイル・ライブラリ関係なく動作
+
+Cargoに引数を渡して一部のテストだけ実行することも可能
+→cargo test mathとすると名前にmathが含まれるテストだけが実行される
+
+assert!マクロやassert_eq!マクロを用いてテストする
+→デバッグビルド時のみテストしたい場合はdebug_assert!やdebug_assert_eq!と使う
+
+#[test]がつけられた関数
+→条件付きでコンパイルされる
+→→テスト用関数とテストツールはテストビルド時にしかビルドされない
+→→→よって対象コードのすぐそばユニットテストを置くことができる
+→→→また必要であれば実装内部の細部にアクセスも可能で実行コストはかからない
+
+テストがサポート用のコードを必要とするほど大きい
+→tests moduleを作って#[cfg]属性で設定するのが慣例
+
+Rustのテストツール
+→複数のスレッドを用いて複数のテストを同時に行う(RUST_TEST_THREADSを1にすれば避けられる)
+
+8.6.1 結合テスト
+
+結合テスト
+→srcディレクトリのtestsディレクトリに.rsファイルとして書く
+→cargo testを実行すると個々の結合テストを独立したcrateとしてコンパイル
+→→crateを外部ユーザ目線で扱えること(extern宣言が必要になる)
+
+cagro testすると単体テストと結合テストの両方が実行される
+→あるファイルに書かれた結合テストのみ実行するときは
+→cargo test --test unfurlなど(tests/unfuel.rsをテストする場合)
+
+8.6.2 ドキュメント
+
+cargo docとするとライブラリのHTMLドキュメントが生成される
+→生成したドキュメントをtarget/docに格納する。
+
+public itemとdoc commentsから生成される
+→doc comments(///)は#[doc]として解釈される
+→→#[doc = "HogeHoge."]
+
+同様に//!で始まるコメント
+→#![doc]属性として扱われる
+
+doc commentsはMarkdown形式として扱われる
+→*イタリック*、**ボールド**
+
+HTMLタグを書くとそのままドキュメントにコピーされる
+
+空行はパラグラフの切れ目とみなす
+
+コード片はバッククォートで囲む``` code ```
+自動的にテストになる
+
+8.6.3 ドクテスト
+
+doc comments内のコードブロックは独立したテストになる
+→プログラムがコンパイルでき実行できればテストにパスしたことになる
+
+システムがコンパイル・実行できることを保証してくれるということ
+
+インポートや準備のコードが必要なとき(かつドキュメントに表示するほどでもないとき)
+→行頭に#とspaceをつける
+
+main関数やextern crate宣言を含むサンプルプログラム
+→それを含むコードブロックは完全なプログラムだとみなし定型句を追加しない
+
+```no_run HogeHoge ```: コンパイルはするが実行はしない
+```ignore HogeHoge ```: コンパイルも実行もしない
+```languagename fo ```: languagenameのコードの時
+
+8.7 依存ライブラリの指定
+
+プロジェクトが依存するcrateの取得先をCargoに指定する方法
+→例えばバージョン番号を指定する
+→→iamge = "0.6.1"
+
+GitレポジトリのURLとリビジョンをかく
+→image = { git = "https://github.com/Pition/image.git", rev = "528f19c" }
+→→利用したいrev、tag、branchを指定することができる
+
+crateのソースコードが存在するディレクトリを指定する
+→image = { path = "vendor/image" }
+
+OScrateの機能が欲しているものと違えばForkして修正すれば良い
+
+8.7.1 バージョン
+
+Cargoは指定されたバージョンと互換性があるもっとも最新のバージョンを利用
+→互換性ルールはSemantic Versining(http://semver.org/)から採用(x.y.z)
+
+演算子を用いて厳密に指定したり範囲指定できる
+→例えば"=x.y.z"や">x.y.z <u.v.w"など
+→→ワイルドカード*も使用可能
+
+8.7.2 Cargo.lock
+
+Cargo.lock
+→最初にbuildした時に生成
+→buildのたびにバージョン変更することを防ぐ
+→→切り替わるのはCargo.tomlを変更した時とcargo updateをした時のみ
+
+Cargo.lockをバージョン管理の対象をしてコミットすると依存ライブラリ更新記録になる
+プロジェクトがライブラリの場合はコミットする必要がない
+
+8.8 クレートのcrates.ioでの公開
+
+簡単にできる
+
+cargo package
+
+・ライブラリのすべてのソースとCargo.tomlを含むファイルを作る
+→hoge_hoge-0.1.0.crate
+→このファイルをcrates.ioにアップロードする
+
+・ファイルからbuildしてチェックする
+
+ライセンスについては警告文のURLを参照すること
+mail addressには注意
+
+path指定したライブラリはpathが無視される
+→バージョン番号を指定すれば良い
+→→両方指定することもできる
+
+crateを公開するにはcrate.ioにログインしてAPIキーを取得する必要がある
+→詳細はP183
+
+cargo publish
+→公開!
+
+8.9 ワークスペース
+
+ビルドディレクトリtarget:
+それぞれのcrateが依存するものが独立して置いてある
+
+Cargoのワークスペースを使えばコンパイル時間とディスクスペースを節約可能
+→共通のビルドディレクトリとCargo.lockを共有するcrateの集合
+
+ルートディレクトリにCargo.tomlファイルを置いて以下のように書く
+[workspace]
+mumbers = ["hoge", "foo", "bar"]
+→"mogu"はサブディレクトリ名
+→サブディレクトリのCalgo.lockやtargetは消しておく
+
+cargo build --allのように--allオプションが使える
+
+8.10 もっといいもの
+
+Rustコミュニティが用意した細々したものが他にもある
