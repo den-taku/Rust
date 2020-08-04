@@ -38,7 +38,7 @@ enumerationsやvariantをimportすることができる
 #[repr]属性を付加することでメモリ上の表現を指定することができる
 →詳しくは 21章 unsafeなコード
 
-列挙型から整数型へのキャストは許されている
+列挙型から整数型へのキャストは許されている(as演算子を用いる)
 →整数型から列挙型へのキャストはenum宣言内の値になる保証ができないので不可
 →→自分でチェックしながらmatchで変換することはできる
 →→もしくはenum_primitiveクレート(自動生成マクロ)を使ってもよい
@@ -49,6 +49,19 @@ enumerationsやvariantをimportすることができる
 
 10.1.1 データを保持する列挙体
 
+タプル型ヴァリアント(tuple variants):
+列挙型のvariantのうち引数を持つもの
+
+→tupleの時と同じでこの書き方(コンストラクタ)が新たなRoughTime値を作るための関数になる
+
+構造体型ヴァリアント(struct variants):
+名前付きフィールドを持つヴァリアント
+
+variant ⟷  unit型構造体
+tuple variant ⟷  tuple structure
+struct variant ⟷  named field
+
+１つの列挙体にこれらが混ざっても構わない
 
 
 
