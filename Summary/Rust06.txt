@@ -12,6 +12,7 @@ Cでは式(expression)と文(statement)が厳密に区別されている
 Rustはいわゆる式言語(expression language)の１つ
 →全て式なので値を作ることができる
 →→ifやmatchを初期化や引数に使える
+→→→セミコロンなしの値を返す
 
 if文がそのまま使えるので三項演算子がない
 
