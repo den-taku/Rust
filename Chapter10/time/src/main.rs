@@ -58,4 +58,6 @@ fn main() {
         RoughTime::InTheFuture(TimeUnit::Hours, 3);
     let unit_sphere = Shape::Sphere { center: 0.0, radius: 1.0 };
     println!("Hello, world!");
+    let sphere = Shape::Sphere{ center: 0.0, radius: 2.0 };
+    // let r = sphere.radius;
 }
