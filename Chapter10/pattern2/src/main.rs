@@ -10,4 +10,8 @@ fn main() {
         (a, b) if b > 30 => { println!("( {}, {} )", a, b); }
         _      => {}
     }
+    match tpl {
+        // x @ (a,b) => {} // err: pattern bindings after an `@` are unsttable.
+        x @ (..) => { println!("( {}, {} )", x.0, x.1); }
+    }
 }
