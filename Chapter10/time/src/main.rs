@@ -7,6 +7,21 @@ enum RoughTime {
     InTheFuture(TimeUnit, u32)
 }
 
+fn rough_time_to_english(rt: RoughTime) -> String {
+    match rt {
+        RoughTime::InThePast(units, 1) =>
+            format!("an {} ago", units.singular()),
+        RoughTime::InThePast(units, count) =>
+            format!("{} {} ago", count, units.plural()),
+        RoughTime::JustNow =>
+            format!("just now"),
+        RoughTime::InTheFuture(unit, 1) =>
+            format!("a {} from now", unit.singular()),
+        RoughTime::InTheFuture(units, count) =>
+            format!("{} {} from now", count, units.plural())
+    }
+}
+
 #[derive(Copy, Clone, Debug, PartialEq)]
 enum TimeUnit {
     Seconds,
@@ -60,4 +75,13 @@ fn main() {
     println!("Hello, world!");
     let sphere = Shape::Sphere{ center: 0.0, radius: 2.0 };
     // let r = sphere.radius;
+    
+    let rt = RoughTime::InTheFuture(TimeUnit::Months, 1);
+    println!("{}", rough_time_to_english(rt));
+    println!("{}", rough_time_to_english(RoughTime::InThePast(TimeUnit::Hours, 1)));
+    // let str = "String".to_string();
+    // let neko = match str {
+    //     "String".to_string() => "string".to_string(),
+    //     _ => "bye".to_string()
+    // };
 }
