@@ -21,4 +21,3 @@ fn main() {
     println!("{}", tpl.0);
     println!("{}", Tpl::new(54, 65, 90.0).2);
 } 
-
