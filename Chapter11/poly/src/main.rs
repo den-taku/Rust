@@ -21,10 +21,10 @@ fn min<T: Ord>(value1: T, value2: T) -> T {
 
 fn main() {
     println!("{}", type_of(File::create("hello.txt")));
-//    let mut local_file = File::create("hello.txt")?;
-//    say_hello(&mut local_file)?;
+    let mut local_file = File::create("hello.txt").expect("error");
+    say_hello(&mut local_file).expect("error");
     
-//    let mut bytes = vec![];
-//    say_hello(&mut bytes)?;
-//    assert_eq!(bytes, b"hello world\n");
+    let mut bytes = vec![];
+    say_hello(&mut bytes).expect("error");
+    assert_eq!(bytes, b"hello world\n");
 }
