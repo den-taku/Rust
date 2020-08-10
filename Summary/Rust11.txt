@@ -204,8 +204,31 @@ where Self: Sized
 
 11.3 完全修飾メソッド呼び出し
 
+次の4つの呼び出しは等価
+"hello".to_string()
+str::to_string("hello")
+ToString::to_string("hello")
+<str as ToString>::to_string("hello")
 
+value.method()以外の呼び出し:
+修飾メソッド呼び出し
+→メソッドが関連付けられている型かトレイトを明示的に指定している
 
+<>を使った呼び出し型:
+完全修飾(fully qualified)メソッド呼び出し
+→型とトレイトの両方を指定している
+
+.演算子と用いた呼び出し
+→どのmethod()を呼び出すか指定しない
+→→Rustのメソッド探索アルゴリズムが決定する
+
+完全修飾呼び出し
+→明示的に指定
+
+同じ名前のメソッドがあるときやself引数の型が推論できない時などに役立つ
+→static methodでも利用可能
+
+11.4 型と型の関係を定義するトレイト
 
 
 
