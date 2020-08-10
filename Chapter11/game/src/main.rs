@@ -9,6 +9,13 @@ trait Visible {
    fn hit_test(&self, x: i32, y: i32) ->bool;
 }
 
+/// Someone in the game world, either the player or some other
+/// pixie, gargoyle, squirrel, ogre, etc.
+trait Creature: Visible {
+    fn position(&self) -> (i32, i32);
+    fn facing(&self) -> Direction;
+}
+
 impl Broom {
     /// Helper function used by Broom::draw() below.
     fn broomstick_range(&self) -> Range<i32> {
