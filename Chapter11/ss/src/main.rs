@@ -31,4 +31,5 @@ fn main() {
     let set2 = HashedStringSet::new();    
 
     println!("Hello, world!");
+    println!("Hello, world!");
 }
