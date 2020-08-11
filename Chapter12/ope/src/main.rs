@@ -38,5 +38,10 @@ fn main() {
     println!("-({} + {}i) = {} + {}i",
         a.re, a.im, (-a).re, <Complex<f32> as Neg>::neg(a).im);
 
+    let mut s:&str = "hoge";
+    println!("{}", s);
+    s = "hogehoge";    
+    println!("{}", s);
+
     println!("Hello, world!");
 }
