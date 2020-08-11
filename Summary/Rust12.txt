@@ -123,7 +123,20 @@ PartialEqを独自に実装したとして、それが部分同値関係を保�
 
 12.3 順序比較
 
+全ての順序比較演算子<、>、<=、>=
+→std::cmp::PartialOrdで指定
+→→PartialEqの拡張になっている
 
+partial_cmpメソッドを実装すれば良い
+→Some(o)を返し、oがselfとotherの関係を示す(Less, Equal, Greater(std::cmp::Ordering))
+→→NaN値と何かを比較するときはNoneが返される
+
+２つの値が常に順序づけ可能
+→より厳密なstd::cmp::Ordを実装可能
+→→trait Ord:: Eq + PartialOrd<Self>
+→→→常にOrderingを返す
+
+12.4 IndexとIndexMut
 
 
 
