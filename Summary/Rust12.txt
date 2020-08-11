@@ -81,9 +81,47 @@ trait AddAssign<RHS=Self> {
 
 12.2 等価性テスト
 
+等価判定演算子==と!=
+→std::cmp::PartialEqトレイトのeqメソッド、neメソッドの省略形
 
+trait PartialEq<Rhs: ?Sized = Self> {
+    fn eq(&self, other: &Rhs) -> bool;
+    fn ne(&self, other: &Rhs) -> bool { !self.eq(other) }
+}
+→オペランドを参照で受ける
 
+#[derive(PartialEq)]で自動的に生成
+→その型のfieldや要素を1つずつ比較して行くだけ
 
+Rustは通常型パラメータがsizedであることを要求する
+→?Sizedとすることでその要求を緩和している(Sizedの詳細は13章)
+
+同値関係
+・x == yが真ならばy == xも真
+・x == yかつy == zならばx == z
+・x == xは常に真
+
+IEEEの浮動小数点数
+→/0.0のような不適切な計算結果→NaN(not-a-number)を生成
+→NaNはそれ自身を含むここのNaN値と等価でない
+→→よって同値関係の3を満たし得ない
+
+部分同値関係(partial equivalence relation):
+同値関係の要求のうち3つ目が満たされない
+
+完全な同値関係
+→sd::cmp::Eqトレイトを制約にかく
+→→PartialEqだがEqでないstdライブラリ型はf32とf64だけ
+→→trait Eq: PartialEq<Self> {}
+
+derive属性にEqを付け加えることもできる
+
+ジェネリック型に対して自動生成された実装
+→型パラメータに依存する場合がある
+
+PartialEqを独自に実装したとして、それが部分同値関係を保証することをコンパイラが調べることはできない
+
+12.3 順序比較
 
 
 
