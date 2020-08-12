@@ -138,10 +138,39 @@ partial_cmpメソッドを実装すれば良い
 
 12.4 IndexとIndexMut
 
+std::ops::{Index, IndexMut}トレイトを実装することでa[i]のようなインデックス式の動作を指定できる
 
+配列は[]演算子を直接サポート
 
+他の型は*a.index(i)の短縮系
+→ただし式が代入の対象or可変参照として借用されている場合は*a.index_mut(i)の短縮系
 
+trait Index<Idx> {
+    type Output: ?Sized;
+    fn index(&self, idx: Idx) -> &Self::Output;
+}
 
+trait IndexMut<Idx>: Index<Idx> {
+    fn index_mut(&mut self, index: Idx) -> &mut Self::Output;
+}
+
+<Idx>をusizeやRnage<usize>などで実装できる
+
+IndexMutトレイトはselfへの可変参照を取りOutput型への可変参照を返す
+→なんらかの値の可変参照を返さなければならないのでm["十"]=10;のようには書けない
+
+indexがよく用いられるのはcollectionsに対して
+→二次元配列の実装はChapter12/int/src/main.rsに
+→→これはrowが領域外だった時panicを起こす
+
+12.5 その他の演算子
+
+Rustでは全ての演算子がオーバーロードできる訳ではない
+→?、&&、||、..、&、=など
+→→参照解決演算子*とドット演算子.はオーバーロード可能(次章)
+
+関数呼び出し演算子()もオーバーロードできない
+→呼び出し可能な値を作りたければクロージャを使う(これらなどは14章)
 
 
 
