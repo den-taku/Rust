@@ -106,9 +106,20 @@ clone_fromメソッドはselfを書き換えてsourceのcopyにする
 
 13.4 Copy
 
+Copy型:
+std::marker::Copyマーカトレイトを実装している型
+→浅いバイト単位でのコピーだけでコピーが可能な型のみ実装可能
 
+trait Copy: Clone {}
 
+Dropトレイトを実装している型はCopyにすることができない
 
+#[derive(Copy)]で自動的に実装することが可能
+
+型をCopyにするかはよく考えた方が良い
+→詳しくは4.3で説明した通り
+
+13.5 DerefとDerefMut
 
 
 
