@@ -78,7 +78,33 @@ unsizedな型を直接作ることはできない
 
 13.3 Clone
 
+std::clone::Cloneトレイトは自身のコピーを作ることができる型のトレイト
 
+trait Clone: Sized {
+    fn clone(&self) -> Self;
+    fn clone_from(&mut self, source: &Self) {
+        *self = source.clone()
+    }
+}
+
+selfの独立したコピーを作りそれを返す
+
+クローンを作るとそれが保有しているもの全てもコピーすることになる
+→時間とメモリの両方で高価である可能性がある
+→→参照カウントポインタは例外でカウントをインクリメントして新しいポインタを返す
+
+clone_fromメソッドはselfを書き換えてsourceのcopyにする
+→例えばs=t.clone()よりs.clone_from(t)の方がヒープの操作がない分高速
+
+独自型に対して全てのfieldおよび要素をcloneするだけで良くデフォのclone_fromで良い
+→#[derive(Clone)]属性で自動的に実装
+
+標準ライブラリに定義されている型
+→ほとんどがCloneを実装
+→→意味のないもの・失敗する可能性のあるものは非実装
+→→→try_cloneメソッドはstd::io::Result<T>を返す
+
+13.4 Copy
 
 
 
