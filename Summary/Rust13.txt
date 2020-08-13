@@ -152,15 +152,68 @@ Ved<T> -> [T]など
 
 13.6 Default
 
+型によっては自明なdefault値がある
+→std::default::Defaultトレイトを実装できる
 
+trait Default {
+    fn default() -> Self;
+}
 
+collectionsは空のcollectionを返すことが多い
 
+多数のparameterの集合を表す構造体
+→デフォルト値を生成するのにDefaultが使われる
+→→..Default::default()で残りのfieldをデフォルト値に初期化できる
 
+ある型TがDefaultを実装
+→Rc<T>,Arc<T>,Box<T>,Cell<T>,RefCell<T>,Cow<T>,Mutex<T>,RwLock<T>についてもDefaultを設定
 
+tupleの全ての要素がDefaultを実装
+→そのタプル型もDefaultを実装
 
+構造体に対しては暗黙にDefaultを実装することはない
+→#[derive(Default)]属性で自動実装可能
 
+Option<T>のDefaultはNone
 
+13.7 AsRefとAsMut
 
+ある型がAsMut<T>を実装
+→その型から効率的に&Tを借用できる
+
+trait AsRef<T: ?Sized> {
+    fn as_ref(&self) -> &T;
+}
+trait AsMut<T: ? Sized> {
+    fn as_ref_mut(&mut self) -> &mut T;
+}
+
+関数を引数に対してより柔軟にするために用いられることが多い
+→<P: AsRef<Path>>とするとPathを渡しても関数を使える
+
+型パラメータの制約を満たすための参照解決型変換は行われない
+→包括的実装により解決
+→→つまり任意の型TとUに対してT:AsRef<U>なら&T:AsRef<U>
+
+特定の型変換用のトレイトの増殖を防ぐための汎用標準参照解決トレイトになっている
+
+13.8 BorrowとBorrowMut
+
+AsRefトレイトに似ている
+
+ある型がBorrow<T>を実装
+→borrowメソッドで効率的に&Tを借用できる
+
+Borrowには少し厳しい制限がある
+→&Tのハッシュ値や比較が元の値と同じように行える場合にだけ実装するべき(強制ではない)
+
+trait Borrow<Borrowed: ?Sized> {
+    fn borrow(&self) -> &Bollowed;
+}
+
+ジェネリックなハッシュテーブルなどの連想コレクション型で時に用いる
+
+文字列に似た型は対応するスライス型をBorrowできる
 
 
 
