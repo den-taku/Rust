@@ -247,9 +247,17 @@ fromやintoは引数の所有権を奪う
 
 13.10 ToOwned
 
+std::borrow::ToOwnedトレイト
+→参照から所有された値へ変換するための少し緩和された方法を提供
 
+trait ToOwned {
+    type Owned: Borrow<Self>;
+    fn to_owned(&self) -> Self::Owned;
+}
 
+正確にSelfを返さなくてよく、&Selfから参照できるものならなんでも返せる
 
+13.11 BorrowとToOwnedの動作例:つつましいCow
 
 
 
