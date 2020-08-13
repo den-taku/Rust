@@ -259,12 +259,24 @@ trait ToOwned {
 
 13.11 BorrowとToOwnedの動作例:つつましいCow
 
+仮引数は借用(参照で)すべきか所有(値で)すべきかが実行時まで決められない場合もある
+→std::borrow::Cow型(Clone on write)が用意されている
 
+enum Cow<'a, B: ?Sized + 'a>
+    where B: ToOwned
+{
+    Borrowed(&'a B),
+    Owned(<B as ToOwned>::Owned),
+}
 
+所有している値からはBへの参照を借用できる
 
+to_mutメソッドを呼ぶと可変参照を取得することもできる
+→Cow::Borrowedの時、保持している参照のto_ownedを呼び出してコピーを作成しCow::Ownedに変化して可変参照を借用
+→→clone on write(Cow)
 
-
-
+into_ownedメソッドもある
+→参照を所有できる値に変換し返す(Cowは消費される)
 
 
 
