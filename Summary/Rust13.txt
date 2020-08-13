@@ -121,11 +121,36 @@ Dropトレイトを実装している型はCopyにすることができない
 
 13.5 DerefとDerefMut
 
+std::ops::DerefやDerefMutを実装すれば参照解決演算子の動作を指定できる
 
+Box<T>やRc<T>はこれらを実装することで組み込みポインタ型と同様の動作を行う
 
+trait Deref {
+    type Target: ?Sized;
+    fn deref(&self) -> &Self::Target;
+}
+trait DerefMut: Deref {
+    fn deref_mut(&mut self) -> &mut Self::Target;
+}
 
+TargetはSelfが所有か参照している型
 
+Derefは&Self参照を受けとり&Self::Target参照を返す
+→前者から後者への自動変換に用いられる(型の不整合が防げるのなら)
+→→参照解決型変換(deref coercions)
 
+Rc<String> -> String
+String -> str
+Ved<T> -> [T]など
+
+これらのトレイトはBox, Rc, Arcなどのスマートポインタ型を実装するために設計されている
+また参照で使うことの多い値の所有versionの実装にも
+
+ジェネリックな関数に渡すと参照解決変換が行われずエラーを吐く
+→as演算子を使って明示的に型変換する
+→→このようにTarget型のメソッドを自動的に使うためだけにDerefなどを用いるのは上手く行かない
+
+13.6 Default
 
 
 
