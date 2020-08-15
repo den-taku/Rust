@@ -58,6 +58,11 @@ fn has_monster_attacks(city: &City) -> bool {
     city.monster_attack_risk > 0.0
 }
 
+fn call_twice<F>(clousure: F) where F: Fn() {
+    clousure();
+    clousure();
+}
+
 fn main() {
     // let my_key_fn: fn(&City) -> i64 =
     //     if user.prefs.by_population {
@@ -81,8 +86,9 @@ fn main() {
 
     let my_str = "hello".to_string();
     let f = || drop(my_str);
-    f();
     // f();
+    // f();
+    // call_twice(f);
 }
 
 
