@@ -105,9 +105,30 @@ Rustがクロージャの型を知っている
 
 14.4.3 FnMut
 
+mut参照をもつクロージャを複数のスレッドからmutでないクロージャを呼び出すのは安全でない
+→FnMutクロージャ(書き込みを行うクロージャ)
+→→なんらかの値にmutアクセスするが値のドロップはしないクロージャ
 
+// Psuedocode for `Fn`, `FnMut`, and `FnOnce` traits.
 
+trait Fn() -> R {
+    fn call(&self) -> R;
+}
+→制限なしに何度でも呼び出せる。fn関数も含まれる
 
+trait FnMut() -> R {
+    fn call_mut(&mut self) -> R;
+}
+→クロージャそのものがmutと宣言されて入れば何度でも呼び出せる
+
+trait FnOnce() -> R {
+    fn call_once(self) -> R;
+}
+→呼び出し元から一度だけ呼び出せる
+
+Fn ⊂ FnMut ⊂ FnOnce
+
+14.5 コールバック
 
 
 
