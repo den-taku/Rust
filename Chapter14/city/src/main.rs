@@ -78,6 +78,11 @@ fn main() {
         &my_cities,
         |city| city.monster_attack_risk > limit);
     println!("{} cities has at risk for monster attack.", n);
+
+    let my_str = "hello".to_string();
+    let f = || drop(my_str);
+    f();
+    // f();
 }
 
 
