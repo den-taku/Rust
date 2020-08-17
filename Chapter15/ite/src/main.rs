@@ -1,5 +1,7 @@
 use std::ffi::OsStr;
 use std::path::Path;
+use std::collections::BTreeSet;
+use std::fmt::Debug;
 
 fn _triangle(n: i32) -> i32 {
     let mut sum = 0;
@@ -11,6 +13,15 @@ fn _triangle(n: i32) -> i32 {
 
 fn triangle2(n: i32) -> i32 {
     (1..n+1).fold(0, |sum, item| sum + item)
+}
+
+fn _dump<T, U> (t: T)
+    where T: IntoIterator<Item=U>,
+          U: Debug
+{
+    for u in t {
+        println!("{:?}", u);
+    }
 }
 
 fn main() {
@@ -36,4 +47,13 @@ fn main() {
     let mut iterator = path.iter();
     assert_eq!(iterator.next(), Some(OsStr::new("C:")));
     assert_eq!(iterator.next(), Some(OsStr::new("Users")));
+
+    let mut favorites = BTreeSet::new();
+    favorites.insert("Lucy in the Sky With Diamonds".to_string());
+    favorites.insert("Liebesträume No. 3".to_string());
+
+    let mut it = favorites.into_iter();
+    assert_eq!(it.next(), Some("Liebesträume No. 3".to_string()));
+    assert_eq!(it.next(), Some("Lucy in the Sky With Diamonds".to_string()));
+    assert_eq!(it.next(), None);
 }
