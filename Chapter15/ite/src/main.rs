@@ -1,4 +1,4 @@
-fn triangle(n: i32) -> i32 {
+fn _triangle(n: i32) -> i32 {
     let mut sum = 0;
     for i in 1..n+1 {
         sum  += i;
@@ -11,5 +11,12 @@ fn triangle2(n: i32) -> i32 {
 }
 
 fn main() {
-    println!("{}", triangle2(920));
+    println!("sum: {}", triangle2(920));
+    
+    println!("There's:");
+    let v = vec!["antimony", "arsenic", "aluminum", "selenium"];
+
+    for element in &v {
+        println!("{}", element);
+    }
 }

@@ -19,12 +19,49 @@ Rustは簡単な計算があればそれに置き換えてしまう
 
 15.1 IteratorトレイトとIntoIteratorトレイト
 
+イテレータ:
+std::iter::Iteratorトレイトを実装する値
 
+trait Iterator {
+    type Item;
+    fn next(&mut self) -> ->Option<Self::Item>;
+    ... // many default methods
+}
 
+ある型に対して自然にスキャンする方法がある
+→std::iter::IntoIteratorトレイトを実装できる
 
+trait IntoIterator where Self::IntoIter::Item == Self::Item {
+    type Item;
+    type IntoIter: Iterator;
+    fn into_iter(self) -> Self::IntoIter; // 型の値を受け取りイテレータを返す
+}
 
+IntoIteratorを実装する全ての型
+→イテレート可能(iterable)と呼ぶ
 
+forループは次のような呼び出しを短く書いたものに過ぎない
 
+let mut iterator = (&v).into_iter();
+while let Some(element) = iterator.next() {
+    // code
+}
+
+forループに直接イテレータを渡すこともできる
+→全てのイテレータは自動的にIntoIteatorを実装していて自分自身を返す
+
+イテレータがNoneを返したあとでさらにnextメソッドを呼び出す
+→何が起こるかをIteratorは規定していない
+→ほとんどのイテレータは再度Noneを返すが全てがそうするわけではない
+
+用語
+・イテレータはIteratorを実装した任意の型
+・イテレート可能(iterable)はIntoIteratorを実装した任意の型。into_iterメソッドでイテレータを取得できる
+・イテレータは値を生成する
+・イテレータが生成する値をアイテムと呼ぶ
+・イテレータが生成するアイテムを受け取るコードは消費者(consumer)
+
+15.2 イテレータの作成
 
 
 
