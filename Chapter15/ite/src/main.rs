@@ -2,6 +2,7 @@ use std::ffi::OsStr;
 use std::path::Path;
 use std::collections::BTreeSet;
 use std::fmt::Debug;
+use std::iter::FromIterator;
 
 fn _triangle(n: i32) -> i32 {
     let mut sum = 0;
@@ -56,4 +57,10 @@ fn main() {
     assert_eq!(it.next(), Some("Liebesträume No. 3".to_string()));
     assert_eq!(it.next(), Some("Lucy in the Sky With Diamonds".to_string()));
     assert_eq!(it.next(), None);
+
+    let mut outer = "Earth".to_string();
+    let inner = String::from_iter(outer.drain(1..4));
+
+    assert_eq!(outer, "Eh");
+    assert_eq!(inner, "art")
 }
