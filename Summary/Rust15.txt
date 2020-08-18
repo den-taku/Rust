@@ -189,9 +189,17 @@ scanアダプタ
 
 15.3.4 takeとtake_while
 
+takeアダプタとtake_whileアダプタ
+→途中で繰り返しを停止することが可能
 
+fn take(self, n:usize) -> some Iterator<Item=Self::Item>
+    where Self: Sized;
+fn take_while<P>(self, predicate: P) -> some Iterator<Item=Self::Item>
+    where Self: Sized, P: FnMut(&Self::Item) -> bool;
 
+(復習:3.5.1)\で文字列中の行が終われば次の行のインデントは文字列に含まれない
 
+15.3.5 skipとskip_while
 
 
 
