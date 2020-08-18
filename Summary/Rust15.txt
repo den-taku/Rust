@@ -219,9 +219,25 @@ std::env::args関数と組み合わせるとコマンドライン引数をうま
 
 15.3.6 peekable
 
+ピーク可能イテレータ
+→次に生成されるアイテムを消費せずに盗み見ることができる
 
+peekableメソッド
+→ほとんど全てのイテレータをピーク可能にする
 
+fn peekable(self) -> std::iter::Peekable<Self>
+    where Self: Sized;
 
+Peekable<Self>はIterator<Item=Self::Item>を実装したstruct
+Selfは下敷きとなるイテレータ
+
+PeekableイテレータにはOption<&Item>を返すpeekメソッドがある
+→下敷きとなるイテレータに値があればSome(r)を返す(rは次のアイテムへの共有参照)
+
+peekを呼び出す
+→次の値があればnextが呼ばれるまでキャッシュしておく
+
+15.3.7 fuse
 
 
 
