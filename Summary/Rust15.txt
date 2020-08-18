@@ -245,7 +245,23 @@ fuseアダプタ
 
 15.3.8 反転可能イテレータとrev
 
+列の両端からアイテムを引き出せるイテレータ
+→revアダプタで反転させることができる
 
+std::iter::DoubleEndedIteratorトレイトを実装可
+
+trait DoubleEndedIterator: Iterator {
+    fn next_back(&mut self) -> Option<Self::Item>;
+}
+
+全てのイテレータが簡単にDoubleEndedIteratorを実装できるわけではない
+
+DoubleEndedIteratorはrevアダプタで反転できる
+
+f nrev(self) -> some Iterator<Item=Self>
+    where Self: Sized + DoubleEndedIterator;
+
+15.3.8 inspect
 
 
 

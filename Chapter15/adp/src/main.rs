@@ -1,6 +1,7 @@
 use std::str::FromStr;
 use std::collections::HashMap;
 use std::iter::Peekable;
+use std::iter::DoubleEndedIterator;
 
 // fn hoge(int: i32, float: f32) -> i32;
 
@@ -106,6 +107,13 @@ fn main() {
     assert_eq!(not_flanky.next(), None);
     assert_eq!(not_flanky.next(), None);
 
+    let bee_parts = ["head", "thorax", "abdomen"];
+    let mut iter = bee_parts.iter();
+    assert_eq!(iter.next(),      Some(&"head"));
+    assert_eq!(iter.next_back(), Some(&"abdomen"));
+    assert_eq!(iter.next(),      Some(&"thorax"));
+    assert_eq!(iter.next_back(), None);
+    assert_eq!(iter.next()     , None);
 }
 
 // fn _hoge(int: i32, float: f32) -> i32 {
