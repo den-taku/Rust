@@ -54,6 +54,11 @@ fn main() {
     for header in message.lines().take_while(|l| !l.is_empty()) {
         println!("{}", header);
     }
+    for body in message.lines()
+        .skip_while(|l| !l.is_empty())
+        .skip(1) {
+        println!("{}", body);
+    }
 }
 
 // fn _hoge(int: i32, float: f32) -> i32 {

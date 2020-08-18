@@ -201,7 +201,23 @@ fn take_while<P>(self, predicate: P) -> some Iterator<Item=Self::Item>
 
 15.3.5 skipとskip_while
 
+skipとskip_while
+→take,take_whileと対になる
 
+skip:
+繰り返し実行の開始から指定された個数の要素をドロップするイテレータを返す
+
+skip_while:
+クロージャがある条件を満たす要素を見つけるまでドロップする
+
+fn skip(self, n: usize) -> some Iterator<Item=Self::Item>
+    where Self: Sized;
+fn skip_while<P>(self, predicate: P) -> some Iterator<Item=Self::Item>
+    where Self: Sized, P: FnMut(&Self::Item) -> bool;
+
+std::env::args関数と組み合わせるとコマンドライン引数をうまく扱える
+
+15.3.6 peekable
 
 
 
