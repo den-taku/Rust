@@ -19,6 +19,22 @@ fn parse_number<I>(tokens: &mut Peekable<I>) -> u32
     }
 }
 
+struct Flanky(bool);
+
+impl Iterator for Flanky {
+    type Item = &'static str;
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.0 {
+            self.0 = false;
+            Some("totally the last item")
+        } else {
+            self.0 = true; // D'oh!
+            None
+        }
+    }
+}
+
+
 fn main() {
     let text = "  ponies  \n    giraffes\niguanas  \nsquid".to_string();
     let v: Vec<&str> = text.lines()
@@ -81,6 +97,15 @@ fn main() {
     assert_eq!(chars.next(), Some(','));
     assert_eq!(parse_number(&mut chars), 1766319049);
     assert_eq!(chars.next(), None);
+    let mut flanky = Flanky(true);
+    assert_eq!(flanky.next(), Some("totally the last item"));
+    assert_eq!(flanky.next(), None);
+    assert_eq!(flanky.next(), Some("totally the last item"));
+    let mut not_flanky = Flanky(true).fuse();
+    assert_eq!(not_flanky.next(), Some("totally the last item"));
+    assert_eq!(not_flanky.next(), None);
+    assert_eq!(not_flanky.next(), None);
+
 }
 
 // fn _hoge(int: i32, float: f32) -> i32 {
