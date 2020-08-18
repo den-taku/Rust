@@ -34,6 +34,18 @@ fn main() {
     for &city in countries.iter().flat_map(|country| &major_cities[country]) {
         println!("{}", city);
     }
+    let iter = (0..10)
+        .scan(0, |sum, item| {
+            *sum += item;
+            if *sum > 10 {
+                None
+            } else {
+                Some(item * item)
+            }
+        });
+    for element in &iter.collect::<Vec<i32>>() {
+        println!("{}", element);
+    }
 }
 
 // fn _hoge(int: i32, float: f32) -> i32 {
