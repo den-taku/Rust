@@ -116,9 +116,46 @@ drainメソッドで削除する範囲を指定することができる(drain(ra
 アダプタ:
 1つのイテレータを消費し、何らかの有用な動作を行って、別のイテレータを作る
 
+15.3.1 mapとfilter
 
+mapアダプタ
+→ここの要素に対してクロージャを適用するイテレータに変換する
 
+filterアダプタ
+→ここの要素のうち一部を取り除いたイテレータに変換する
+→→取り除くかどうかはクロージャで決定
 
+text.line()
+→各行を文字列として生成するイテレータを返す
+
+.collect()
+→生成されたアイテムをベクタに集める
+
+map(closure)
+→各アイテムに対しclosureを呼び出す
+→→クロージャに値として渡す
+
+filter(closure)
+→closureがtrueを返すアイテムのみをアイテムとして生成
+→クロージャに要素の共有参照を渡す
+
+イテレータのチェーンは左から右へ読んでいけば簡単に理解できる
+
+fn map<B, F>(self, f:F) -> some Iterator<Item=B>
+    where Self: Sized, F: FnMut(Self::Item) -> B;
+
+fn filter<P>(self, predicate: P) -> some Iterator<Item=Self::Item>
+    where Self: Sized, P: FnMut(&Self::Item) -> bool;
+
+some Iterator<...>はRustの正式な構文ではない
+
+イテレータアダプタは新しいイテレータを返すだけでアイテムを消費しない
+→nextを呼び出さないと何も起きない(lazy)
+
+イテレータアダプタはオーバーヘッドのない抽象化
+→全てジェネリックに書かれているので必要な情報が揃っておりイテレータのnextメソッドをインライン化できる
+
+15.3.2 filter_mapgとflat_map
 
 
 
