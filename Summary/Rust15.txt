@@ -157,8 +157,26 @@ some Iterator<...>はRustの正式な構文ではない
 
 15.3.2 filter_mapgとflat_map
 
+filter_mapアダプタ
+→クロージャが新しいアイテムに変換するか繰り返しからdropする
 
+fn filter_map<B, F>(self, f:F) -> some Iterator<Item=B>
+    where Self: Sized, F: FnMut(Self::Item) -> Option<B>;
 
+クロージャがNoneを返したらdropする
+
+mapとfilterでも書けるが見やすさが上がる
+
+flat_mapアダプタ
+→一個のアイテムから任意の個数のアイテムの列を返す
+→→クロージャが返してきたアイテム列を結合した列を生成
+
+fn flat_map<U, F>(self, f: F) -> some Iterator<Item=U::Item>
+    where F: FnMut(Self::Item) -> U, U: IntoIterator;
+
+flat_mapに与えられるクロージャはイテレート可能な値を返さないといけない
+
+15.3.3 scan
 
 
 
