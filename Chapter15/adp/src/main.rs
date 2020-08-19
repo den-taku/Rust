@@ -138,6 +138,21 @@ fn main() {
     for e in &rhyme {
         println!("(\"{}\", \"{}\")", e.0, e.1);
     }
+    let message = "To: jimb\r\n\
+                   From: superego <editor@oreilly.com>\r\n\
+                   \r\n\
+                   Did you get any writing time plotting fractals?\r\n\
+                   When will you stop wasting time plotting fractals?\r\n";
+    let mut lines = message.lines();
+    println!("\nHeaders:");
+    for header in lines.by_ref().take_while(|l| !l.is_empty()) {
+        println!("{}", header);
+    }
+    println!("\nBody:");
+    for body in lines {
+        println!("{}", body);
+    }
+
 }
 
 
