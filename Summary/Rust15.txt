@@ -380,6 +380,23 @@ anyは１つでも、allは全てがtrueを返せばtrueを返す
 
 15.4.7 position、rposition、ExactSizeIterator
 
+positionメソッド
+→イテレータが出力する個々のアイテムにclosureを適用して最初にtrueを返したアイテムのindexを返す
+→正確にはインデックスのOption
+
+rpositionメソッド
+→検索を右から行う
+→→反転可能イテレータでないと動作しない
+→→サイズが決定している必要もある
+
+サイズが決定しているイテレータはExactSizeIteratorトレイトを実装している
+
+pub trait ExactSizeIterator: Iterator {
+    fn len(&self) -> usize;
+    fn is_empty(&self) -> bool;
+}
+
+15.4.8 fold
 
 
 

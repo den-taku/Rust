@@ -34,4 +34,8 @@ fn main() {
     assert!(packed.split_whitespace().eq(spaced.split_whitespace()));
     assert!(spaced < obscure);
     assert!(spaced.split_whitespace().gt(obscure.split_whitespace()));
+
+    let text = "Xerxes";
+    assert_eq!(text.chars().position(|c| c == 'e'), Some(1));
+    assert_eq!(text.chars().position(|c| c == 'z'), None);
 }
