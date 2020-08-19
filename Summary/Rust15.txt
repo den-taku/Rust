@@ -271,9 +271,15 @@ inspectアダプタ
 
 15.3.10 chain
 
+chainアダプタ
+→2つのイテレータをつなげる際に用いる
 
+fn chain<U>(self, other: U) -> some Iterator<Item=Self::Item>
+    where Self: Sized, U: IntoIterator<Item=Self::Item>;
 
+連結する2つのイテレータが両方反転可能ならchainイテレータも反転可能
 
+15.3.11 enumerate
 
 
 

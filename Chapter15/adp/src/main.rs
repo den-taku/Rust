@@ -121,6 +121,12 @@ fn main() {
         .inspect(|c| println!(" after:     {:?}", c))
         .collect();
     println!("{}", upper_case);
+
+    let v: Vec<i32> = (1..4).chain(vec![20, 30, 40]).rev().collect();
+    for e in &v {
+        println!("{}", e);
+    }
+
 }
 
 // fn _hoge(int: i32, float: f32) -> i32 {
