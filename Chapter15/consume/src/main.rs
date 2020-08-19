@@ -13,4 +13,5 @@ fn main() {
     // println!("{}", stdin.lock().lines().count());
     println!("{}", triangle(20));
     println!("{}", factorial(10));
+    println!("{}", match [-2, 0, 1, 0, 2, -5].iter().max(){Some(r)=>*r,_=>0});
 }
