@@ -38,4 +38,14 @@ fn main() {
     let text = "Xerxes";
     assert_eq!(text.chars().position(|c| c == 'e'), Some(1));
     assert_eq!(text.chars().position(|c| c == 'z'), None);
+
+    let a = [5, 6, 7, 8, 9, 10];
+    println!("{}", a.iter().fold(0, |n, _| n+1));
+    println!("{}", a.iter().fold(0, |n, i| n+i));
+    println!("{}", a.iter().fold(1, |n, i| n*i));
+    println!("{}", a.iter().fold(i32::min_value(), |m, &i| std::cmp::max(m,i)));
+
+    let a = ["Pack ", "my ", "box ", "with ", "five ", "dozen ", "liquor ", "jugs"];
+    let pangram = a.iter().fold(String::new(), |mut s, &w| { s.push_str(w); s });
+    println!("{}", pangram);
 }

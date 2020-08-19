@@ -398,7 +398,22 @@ pub trait ExactSizeIterator: Iterator {
 
 15.4.8 fold
 
+イテレータが生成するアイテム列全体に対する累積処理を行う汎用ツール
 
+アキュムレータ(accumulator)(初期値)とクロージャを与える
+→クロージャをアキュムレータの現在値とアイテムに繰り返し適用していく
+→→クロージャが返した値が新たなアキュムレータになる
+
+foldは最後のアキュムレータの値を返す
+
+イテレータの値を消費する他のメソッドの多くはfoldで書くこともできる
+
+fn fold<A, F>(self, init: A, f: F) -> A
+    where Self: Sized, F: FnMut(A, Self::Item) -> A;
+
+アキュムレータは移動されるので非Copy型の値でも良い
+
+15.4.9 nth
 
 
 
