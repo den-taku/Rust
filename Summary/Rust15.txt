@@ -484,7 +484,10 @@ fn partition<B, F>(self, f: F) -> (B, B)
 
 15.5 独自イテレータの実装
 
+IntoIteratorトレイトとIteratorトレイトを独自の型に実装
+→本章のアダプタと消費者が全て使えるようになる
 
+標準ライブラリがIteratorを実装する全ての型に対するIntoIteratorを包括実装している
 
 
 
