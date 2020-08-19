@@ -442,7 +442,21 @@ fn find<P>(&mut self, predicate: P) -> Option<Self::Item>
 
 15.4.12 コレクションの作成:collectとFromIterator
 
+collectメソッドは適切なアイテムを返す
+→標準ライブラリにある全てのコレクションが作れる
 
+collectが作成できる全てのコレクション型についての実装を持つわけではない
+→コレクション型がstd::iter::FromIteratorトレイトを実装していてこれを呼び出す
+
+trait FromIterator<A>: Sized {
+    fn from_iter<T: IntoIterator<Item=A>>(iter: T) -> Self;
+}
+
+Iterator::size_hintメソッド
+→イテレータの生成するアイテム数の下限値と上限値を返す
+→→デフォルト定義は0とNone(省略の意味)
+
+15.4.13 Extendトレイト
 
 
 

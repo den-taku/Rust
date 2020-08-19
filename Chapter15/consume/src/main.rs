@@ -1,5 +1,6 @@
 // use std::io::prelude::*;
 use std::cmp::{PartialOrd, Ordering};
+use std::collections::{ HashSet, BTreeSet, LinkedList, HashMap, BTreeMap };
 
 fn triangle(n: u64) -> u64 {
     (1..n+1).sum()
@@ -65,5 +66,19 @@ fn main() {
     let squares = (0..10).map(|i| i*i);
     if let Some(n) = squares.last() {
         println!("{}", n);
+    }
+
+    let _args: HashSet<String> = std::env::args().collect();
+    let _args: BTreeSet<String> = std::env::args().collect();
+    let _args: LinkedList<String> = std::env::args().collect();
+
+    // Collecting a map requires (key, value) pairs, so for this example,
+    // zip the sequence of strings with a sequence of integers.
+    let _args: HashMap<String, usize> = std::env::args().zip(0..).collect();
+    let _args: BTreeMap<String, usize> = std::env::args().zip(0..).collect();
+
+    let args: Vec<String> = std::env::args().collect();
+    for e in &args {
+        println!("{}", *e);
     }
 }
