@@ -48,4 +48,17 @@ fn main() {
     let a = ["Pack ", "my ", "box ", "with ", "five ", "dozen ", "liquor ", "jugs"];
     let pangram = a.iter().fold(String::new(), |mut s, &w| { s.push_str(w); s });
     println!("{}", pangram);
+
+    let mut squares = (0..10).map(|i| i*i);
+    if let Some(n) = squares.nth(4) {
+        println!("{}", n);
+    }
+    if let Some(n) = squares.nth(0) {
+        println!("{}", n);
+    }
+    if let Some(n) = squares.nth(6) {
+        println!("{}", n);
+    } else {
+        println!("None");
+    }
 }

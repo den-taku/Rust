@@ -415,6 +415,16 @@ fn fold<A, F>(self, init: A, f: F) -> A
 
 15.4.9 nth
 
+インデックスnを引数としその数だけイテレータからのアイテムをスキップしてアイテムを返す
+
+nth(0)はnext()と等価
+
+アダプタと違いイテレータの所有権を受け取らない
+
+fn nth(&mut self, n: usize) -> Option<Self::Item>
+    where Self: Sized;
+
+15.4.10 last
 
 
 
