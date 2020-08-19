@@ -372,7 +372,13 @@ cmp、partial_cmpメソッドはOrd、PartiakIrdトレイトのメソッドと�
 
 15.4.6 any, all
 
+イテレータの生成するそれぞれのアイテムにクロージャを適用する
 
+anyは１つでも、allは全てがtrueを返せばtrueを返す
+
+必要最低限の要素にしかアクセスしない
+
+15.4.7 position、rposition、ExactSizeIterator
 
 
 
