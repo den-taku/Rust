@@ -26,4 +26,12 @@ fn main() {
     assert_eq!(numbers.iter().min_by(cmp), Some(&1.0));
     // let numbers = [1.0, 4.0, std::f64::NAN, 2.0];
     assert_eq!(numbers.iter().max_by(cmp), Some(&4.0));
+
+    let packed =  "Helen of Troy";
+    let spaced =  "Helen  of  Troy";
+    let obscure = "Helen of Sandusky"; // nice person, just not famous
+    assert!(packed != spaced);
+    assert!(packed.split_whitespace().eq(spaced.split_whitespace()));
+    assert!(spaced < obscure);
+    assert!(spaced.split_whitespace().gt(obscure.split_whitespace()));
 }
