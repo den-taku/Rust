@@ -114,6 +114,13 @@ fn main() {
     assert_eq!(iter.next(),      Some(&"thorax"));
     assert_eq!(iter.next_back(), None);
     assert_eq!(iter.next()     , None);
+
+    let upper_case: String = "große".chars()
+        .inspect(|c| println!("before: {:?}", c))
+        .flat_map(|c| c.to_uppercase())
+        .inspect(|c| println!(" after:     {:?}", c))
+        .collect();
+    println!("{}", upper_case);
 }
 
 // fn _hoge(int: i32, float: f32) -> i32 {

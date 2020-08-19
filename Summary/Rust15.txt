@@ -258,11 +258,18 @@ trait DoubleEndedIterator: Iterator {
 
 DoubleEndedIteratorはrevアダプタで反転できる
 
-f nrev(self) -> some Iterator<Item=Self>
+fn rev(self) -> some Iterator<Item=Self>
     where Self: Sized + DoubleEndedIterator;
 
 15.3.8 inspect
 
+inspectアダプタ
+→イテレータアダプタのパイプラインをデバッグする際に有用
+
+個々のアイテムの共有参照に対してクロージャを適用しアイテムをそのまま通過させる
+→クロージャはアイテムに影響を与えられず出力やアサーションで値を確認する
+
+15.3.10 chain
 
 
 
