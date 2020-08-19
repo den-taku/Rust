@@ -347,7 +347,9 @@ NaN値の扱いがわからないので浮動小数点数には使えない
 
 15.4.3 max_by、min_by
 
+max_byとmin_byはアイテムへの参照をクロージャに渡す
 
+15.4.4 max_by_key、min_by_key
 
 
 
