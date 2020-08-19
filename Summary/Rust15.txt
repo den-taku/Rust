@@ -426,6 +426,13 @@ fn nth(&mut self, n: usize) -> Option<Self::Item>
 
 15.4.10 last
 
+イテレータがNoneを返すまで完全にアイテムを消費し最後のアイテムを返す
+
+fn last(self) -> Option<Self::Item>;
+
+反転可能ならiter.rev().next()と書いて方が良い
+
+15.4.11 find
 
 
 

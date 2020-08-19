@@ -61,4 +61,9 @@ fn main() {
     } else {
         println!("None");
     }
+
+    let squares = (0..10).map(|i| i*i);
+    if let Some(n) = squares.last() {
+        println!("{}", n);
+    }
 }
