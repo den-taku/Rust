@@ -351,6 +351,16 @@ max_byとmin_byはアイテムへの参照をクロージャに渡す
 
 15.4.4 max_by_key、min_by_key
 
+アイテムに対してクロージャを適用した結果が最大・最小のものを返す
+
+fn min_by_key<B: Ord, F>(self, f: F) -> Option<Self::Item>
+    where Self: Sized, F: FnMut(&Self::Item) -> B;
+fn max_by_key<B: Ord, F>(self, f: F) -> Option<Self::Item>
+    where Self: Sized, F: FnMut(&Self::Item) -> B;
+
+返されるのはアイテム全体であってクロージャが返した値だけではない
+
+15.4.5 アイテム列の比較
 
 
 
