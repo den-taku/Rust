@@ -434,7 +434,13 @@ fn last(self) -> Option<Self::Item>;
 
 15.4.11 find
 
+イテレータからアイテムを引き出していき与えられたクロージャがtrueになる最初のアイテムを返す
 
+fn find<P>(&mut self, predicate: P) -> Option<Self::Item>
+    where Self: Sized,
+          P: FnMut(&Self::Item) -> bool;
+
+15.4.12 コレクションの作成:collectとFromIterator
 
 
 
