@@ -2,6 +2,7 @@ use std::str::FromStr;
 use std::collections::HashMap;
 use std::iter::Peekable;
 use std::iter::DoubleEndedIterator;
+use std::iter::repeat;
 
 // fn hoge(int: i32, float: f32) -> i32;
 
@@ -127,7 +128,18 @@ fn main() {
         println!("{}", e);
     }
 
+    let u: Vec<_> = (0..).zip("ABCD".chars()).collect();
+    assert_eq!(u, vec![(0, 'A'), (1, 'B'), (2, 'C'), (3, 'D')]);
+
+    let endings = vec!["once", "twice", "chiken soup with rice"];
+    let rhyme: Vec<_> = repeat("going")
+        .zip(endings)
+        .collect();
+    for e in &rhyme {
+        println!("(\"{}\", \"{}\")", e.0, e.1);
+    }
 }
+
 
 // fn _hoge(int: i32, float: f32) -> i32 {
 //     let _ = float;
