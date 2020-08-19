@@ -458,11 +458,31 @@ Iterator::size_hintメソッド
 
 15.4.13 Extendトレイト
 
+std::iter::Extendトレイトを実装しているcollection型
+→extendメソッドでiterableな型のアイテムを追加できる
 
+trait Extend<A> {
+    fn extend<T>(&mut self, iter: T)
+        where T: IntoIterator<Item=A>;
+}
 
+どうもiterable型→add(element)してるっぽい？
 
+15.4.14 partition
 
+イテレータを2つのコレクションに分割する
+→どちらのコレクションに入れるかはクロージャで判断
+→→2つのcollectionは同じ種類でなくてはいけない
 
+fn partition<B, F>(self, f: F) -> (B, B)
+    where Self: Sized,
+          B: Default + Extend<Self::Item>,
+          F: FnMut(&Self::Item) -> bool;
+
+安全性を担保するために2つのコレクションにしている
+→2つのイテレータだと下敷きのイテレータへの可変参照を2つのイテレータで共有することになるため
+
+15.5 独自イテレータの実装
 
 
 

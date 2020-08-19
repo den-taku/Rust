@@ -81,4 +81,25 @@ fn main() {
     for e in &args {
         println!("{}", *e);
     }
+    
+    let mut v: Vec<i32> = (0..5).map(|i| 1 << i).collect();
+    v.extend(&[31, 57, 99, 163]);
+    for e in &v {
+        println!("{}", e);
+    }
+
+    let things = ["doornob", "mushroom", "noodle", "giraffe", "grapefruit"];
+
+    // Amazing fact: the name of a living thing always
+    // starts with an odd-numbered letter.
+    let (living, noliving): (Vec<&str>, Vec<&str>)
+        = things.iter().partition(|name| name.as_bytes()[0] & 1 != 0);
+    println!("  living:");
+    for name in &living {
+        println!("          {}", name);
+    }
+    println!("noliving:");
+    for name in & noliving {
+        println!("          {}", name);
+    }
 }
