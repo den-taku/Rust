@@ -3,6 +3,7 @@ use std::collections::HashMap;
 use std::iter::Peekable;
 use std::iter::DoubleEndedIterator;
 use std::iter::repeat;
+use std::iter::once;
 
 // fn hoge(int: i32, float: f32) -> i32;
 
@@ -153,6 +154,52 @@ fn main() {
         println!("{}", body);
     }
 
+    let a = ['1', '2', '3', '∞'];
+    assert_eq!(a.iter().next(),          Some(&'1'));
+    assert_eq!(a.iter().cloned().next(), Some('1'));
+
+    let dirs = ["North", "East", "South", "West"];
+    let mut spin = dirs.iter().cycle();
+    println!("{}", match spin.next() {
+                       Some(r) => *r,
+                       None    => "None"
+    });
+    println!("{}", match spin.next() {
+                       Some(r) => *r,
+                       None    => "None"
+    });
+    println!("{}", match spin.next() {
+                       Some(r) => *r,
+                       None    => "None"
+    });
+    println!("{}", match spin.next() {
+                       Some(r) => *r,
+                       None    => "None"
+    });
+    println!("{}", match spin.next() {
+                       Some(r) => *r,
+                       None    => "None"
+    });
+    println!("{}", match spin.next() {
+                       Some(r) => *r,
+                       None    => "None"
+    });
+    println!("{}", match spin.next() {
+                       Some(r) => *r,
+                       None    => "None"
+    });
+    let fizzes = repeat("").take(2).chain(once("fizz")).cycle();
+    let buzzes = repeat("").take(4).chain(once("buzz")).cycle();
+    let fizzes_buzzes = fizzes.zip(buzzes);
+    let fizz_buzz = (1..100).zip(fizzes_buzzes)
+        .map(|tuple|
+            match tuple {
+                (i, ("", "")) => i.to_string(),
+                (_, (fizz, buzz)) => format!("{}{}", fizz, buzz)
+            });
+    for line in fizz_buzz {
+        println!("{}", line);
+    }
 }
 
 
