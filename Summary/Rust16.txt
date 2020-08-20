@@ -297,6 +297,23 @@ slice.starts_with(other):
 slice.ends_with(other):
 スライスの末尾列がスライスotherの要素列と等しければtrueを返す
 
+16.2.9 ランダムな要素
+
+乱数は標準ライブラリに含まれていない
+
+randクレートは2つのメソッドを提供している
+
+rng.choose(slice):
+スライスからランダムに要素を選び参(Option<&T>)照を返す
+
+rng.shuffle(slice):
+スライスの要素をランダムに並び替える
+→スライスはmut参照で渡す
+
+これらはrand::Rngトレイトのメソッドなので乱数生成器Rngが必要
+→rand::thread_rng()を呼べば簡単に作れる
+
+16.2.10 Rustでは無効化エラーは生じない
 
 
 
