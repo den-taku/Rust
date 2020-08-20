@@ -288,6 +288,14 @@ sliceの要素のいずれかがvalueと等しければtrueを返す
 
 16.2.8 スライスの比較
 
+ある型Tが==演算子と!=演算子をサポート
+→配列[T; N]、スライス{T}、ベクタVec<T>もこれらをサポート
+
+slice.starts_with(other):
+スライスの冒頭部の列がスライスotherの要素列と等しければtrueを返す
+
+slice.ends_with(other):
+スライスの末尾列がスライスotherの要素列と等しければtrueを返す
 
 
 
