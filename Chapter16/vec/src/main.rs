@@ -57,4 +57,132 @@ fn main() {
 
     assert_eq!([[1,2], [3,4], [5,6]].concat(), vec![1,2,3,4,5,6]);
     assert_eq!([[1,2], [3,4], [5,6]].join(&0), vec![1,2,0,3,4,0,5,6]);
+
+    let mut i: usize = 0;
+    let mut j: usize = 2;
+
+    let v = vec![0, 1, 2, 3];
+    let a = &v[i];
+    let b = &v[j];
+
+    let mid = v.len() / 2;
+    let front_half = &v[..mid];
+    let back_half = &v[mid..];
+
+    let j = 0;
+
+    let mut v = vec![0, 1, 2, 3];
+    let a = &mut v[i];
+    let b = &mut v[j];
+
+    // *a = 8; // error
+
+    let daily_high_temperatures = vec![12,23,53,32,54,425,532,425,43,523,43,53,42,54,75];
+    let changes = daily_high_temperatures
+                  .windows(2)
+                  .map(|w| w[1] - w[0])
+                  .collect::<Vec<_>>();
+    for c in changes {
+        println!("{}", c);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

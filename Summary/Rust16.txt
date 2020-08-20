@@ -202,7 +202,47 @@ concatとほぼ同じだが、スライスとスライスの間にseparator値�
 
 16.2.5 分割
 
+要素への可変参照を取得するのは難しい
+→同一のものから可変参照をインデックスを用いて2度以上可変参照は取れない
 
+可変参照を借用するメソッド
+→データを重複のない領域に分割するように設計されている
+→→いずれも直接データ列を変更することはなく、内部データの一部へ新たな参照を返すだけ
+
+図16-2にメソッドが示されている
+
+slice.iter(), slece.iter_mut()
+→16.2.2を参照
+
+slice.split_at(index), slice.split_at_mut(index):
+スライスを2つに分けてそれらのペアを返す((&slice[..index], &slice[index..])と等価)
+
+slice.split_first(), slice.split_first_mut():
+最初の要素への参照と、残り全部(slice[1..])への参照のペアを返す
+→返り値の型はOption<(&T, &[T])>
+
+slice.split_last(), slice.split_last_mut():
+最後の要素への参照と、残り全部への参照のペアを返す
+
+slice.split(is_sep), slice.split_mut(is_sep):
+関数およびクロージャのis_sepで1つ以上のサブスライスに分割する場所を決定する
+サブスライスを生成するイテレータを返す
+→is_sep(&element)がtrueを返すセパレータはどのサブスライスにも含まれない
+→→最低でも1つのサブスライスが返され、1つのセパレータごとに1つのサブスライスが追加される
+
+slice.splitn(n, is_sep), slice.splitn_mut(n, is_sep):
+最大でもn個のサブスライスしか作らない(n-1個のサブスライスが作られた時点で残りを1つにまとめる)
+
+slice.rsplitn(n, is_sep), slice.rsplit_mut(n, is_sep):
+スライスを逆順にスキャンする
+
+slice.chunks(n), slice.chunks_mut(n):
+長さnの重複しないサブスライスのイテレータを返す
+
+slice.windows(n):
+&slice[0..n], &slice[1..n+1], &slice[2..n+2],...を返す
+
+16.2.6 入れ替え
 
 
 
