@@ -54,4 +54,7 @@ fn main() {
     let mut seen = HashSet::new();
     byte_vec.retain(|r| seen.insert(*r));
     assert_eq!(&byte_vec, b"Misp");
+
+    assert_eq!([[1,2], [3,4], [5,6]].concat(), vec![1,2,3,4,5,6]);
+    assert_eq!([[1,2], [3,4], [5,6]].join(&0), vec![1,2,0,3,4,0,5,6]);
 }
