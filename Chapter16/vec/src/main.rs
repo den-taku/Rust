@@ -86,7 +86,11 @@ fn main() {
         println!("{}", c);
     }
 
-    
+    let mut my_vec = vec![1, 3, 5, 7, 9]; 
+    my_vec.retain(|&val| val <= 4);
+    for e in &my_vec {
+        println!("{}", e);
+    }
 }
 
 
