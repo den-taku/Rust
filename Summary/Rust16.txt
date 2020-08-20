@@ -244,6 +244,49 @@ slice.windows(n):
 
 16.2.6 入れ替え
 
+slice.swap(i, j):
+slice[i]とslice[j]を入れ替える
+
+vec.swap_remove(i):
+vec[i]を削除し返す。最後の要素を移動してきてギャップを埋める
+
+16.2.7 ソートと検索
+
+スライスには3つのソートメソッドがある
+
+slice.sort():
+要素を昇順にソートする
+
+slice.sort_by(cmp):
+ソートに用いる順序をcmpで指定(他の型のcmpを使える)
+cmp: Fn(&T, &T) -> std::cmp::Ordering
+→タプルを使えば引き分け時にfieldごとに見ていくことが可能
+
+slice.sort_by_key(key):
+keyを用いて得られたソートキーの昇順でソートする
+key: Fn(&T) -> K where F:Ord
+→ソートキーの値はキャッシュされないことに注意
+→keyは要素から借用した参照を返すことができない(生存期間が推論できない)
+
+3つとも安定ソートを行う
+
+逆順にソートしたければsort_byを|b, a|で呼び出せば良い
+→.reverse()を呼び出しても良い
+
+slice.binary_search(&value), slice.binary_search_by(&value, cmp), slice.binary_search_by_key(&value, key):
+ソートされているsliceからvalueを検索する
+→返り値はResult<usize, usize>
+→→Ok(index)かErr(insertion_point)を返す
+
+浮動小数点数にはソートや二分探索のキーには使えない
+
+slice.contains(&value):
+sliceの要素のいずれかがvalueと等しければtrueを返す
+
+スライス内での値の位置を探すにはイテレータを使う
+→slice.iter().position(|x| *x == value) (Option<usize>を返す)
+
+16.2.8 スライスの比較
 
 
 
