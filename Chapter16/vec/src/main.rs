@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 fn main() {
     // Create an empty vector
     let mut numbers: Vec<i32> = vec![];
@@ -43,4 +45,13 @@ fn main() {
     for e in v.to_vec() {
         println!("{}", e);
     }
+
+    let mut byte_vec = b"Misssssssssissssipppppi".to_vec();
+    byte_vec.dedup();
+    assert_eq!(&byte_vec, b"Misisipi");
+
+    let mut byte_vec = b"Misssssssssissssipppppi".to_vec();
+    let mut seen = HashSet::new();
+    byte_vec.retain(|r| seen.insert(*r));
+    assert_eq!(&byte_vec, b"Misp");
 }

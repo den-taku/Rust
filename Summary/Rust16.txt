@@ -105,9 +105,91 @@ Vec<T>のイテレータ
 
 16.2.3 ベクタの伸長と縮小
 
+長さ(length):
+配列、ベクタ、スライスの持つ要素数
 
+slice.len():
+スライスの長さをusizeで返す
 
+slice.is_empty():
+要素が1つもなければtrueを返す
 
+容量(capacity):
+ヒープ領域に保持できる要素の最大数
+
+Vec::with_capacity(n):
+容量nの空のベクタを生成する
+
+vec.capacity():
+vecの容量をusizeで返す(capacity>=lenは恒等)
+
+vec.reserve(v):
+少なくともn個の要素を追加できる容量を確保する
+
+vec.reserve_exact(n):
+n個以上の余分な容量は持たない(c = l + nになる)
+
+vec.shrink_to_fit():
+余分なメモリを解放する
+
+Vec<T>に要素を追加したり削除したりするメソッドはselfのmut参照をとる
+
+vec.push(value):
+指定したvalueをvecの末尾に追加
+
+vec.pop():
+末尾を削除して返す(Option型)
+
+vec.insert(index, value):
+指定したvalueをvec[index]に挿入する
+
+vec.remove(index):
+vec[index]を削除して返す
+
+removeもinsertもずらす要素が多ければ多いほど遅くなる
+
+vec.resize(new_len, value):
+vecの長さをnew_lenにし、伸びる場合はvalueで埋める
+
+vec.truncate(new_len):
+vecを切り落としてnew_lenにする
+もしlen<=new_lenなら何もしない
+
+new.clear():
+vecの全ての要素を削除する
+
+vec.extend(iterable):
+iterableから取得できるアイテムを全て末尾に順に格納
+
+vec.split_off(index):
+vencのindexよりも後ろの要素を削除し、格納したVec<T>を返す
+popの多数の値を扱うversionのようなもの
+
+vec.append(&mut vec2):
+vec2の要素を全てvecに移動する
+vec2は空になるだけで存在は消えない
+
+vec.drain(range):
+vecからvec[range]の範囲を削除して削除した要素に対するイテレータを返す
+rangeは..や0..4などになる
+
+vec.retain(test):
+testにパスしなかった全ての要素を削除
+test: FnMut(&T) -> bool
+
+vec.dedup()
+同じ値が連続していると1つを残しドロップする
+→完全に重複を排除したければソートしたり別のデータ構造に入れたりretainを使う
+
+vec.dedup_by(same):
+同じかどうかの判断にsame(&mut elem1, &mut elem2)を用いる
+
+vec.dedup_by_key(key):
+key(&mut elem1) == key(&mut elem2)ならばelem1とelem2が等しいとする
+
+resizeは値のクローンをするが他のメソッドは全て値の移動を行う
+
+16.2.4 連結
 
 
 
