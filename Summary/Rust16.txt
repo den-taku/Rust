@@ -597,8 +597,44 @@ set.remove(value)と似ているが削除にはその値を返す
 set.replace(value):
 setにvalueと等しい値がすでに入っていればそれを置き換えて古い値をOptionで返す
 
+16.7.3 セット全体に対する演算
 
+set1.intersection(&set2):
+set1とset2の両方に含まれている全ての値に対するイテレータを返す
 
+&演算子:
+&set1 & &set2で積集合になるセットを返す
+
+se1.union(set2):
+set1とset2のどちらかもしくは両方に入っている全ての要素の対するイテレータを返す
+
+|演算子:
+和集合になるセットを返す
+
+set1.difference(&set2):
+set1にはあるがset2にはない値に対するイテレータ
+
+-演算子:
+&set1 - &set2でそのようなセットを返す
+
+set1.symmetric_defference(&set2):
+set1とset2のどちらかには入っていて両方に入ってはいない値に対するイテレータを返す
+
+^演算子:
+&set1 ^ &set2でそのような値を含む新しいセットを返す
+
+set1.is_disjoint(set2):
+積集合が空集合ならtrueを返す
+
+set1.is_subset(set2):
+set1がset2の部分集合ならtrue
+
+set1.is_superset(set2):
+set1がset2の上位集合ならtrue
+
+==、!=演算子もサポートしている
+
+16.8 ハッシュ
 
 
 
