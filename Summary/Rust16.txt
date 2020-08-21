@@ -658,7 +658,35 @@ a == b なら常に hash(a) == hash(b)でなければならない
 
 16.8.1 ハッシュアルゴリズムのカスタマイズ
 
+HashとHasherはバディトレイト(詳細:11.4.3)
 
+std::hash::BuildHasher
+→ハッシュアルゴリズムの初期状態を表現する型のためのトレイト
+
+Hasherは一度しか使われない
+BuildHasherは再利用される
+
+流れ
+fn compute_hash<B, T>(builder: &B, value: &T) -> u64
+    where: B: BuilderHasher, T: Hash
+{
+    let mut hasher = builder.build_hasher(); // 1. start the algorithm
+    value.hash(&mut hasher);                 // 2. feed it data
+    hasher.finish()                          // 3. finish, producing a u64
+}
+
+これらは全てインライン化可能なので高速
+
+Rustのデフォルトハッシュアルゴリズム
+→SipHash1-3(HashDoSに対して安全)
+
+fnvクレートのFowler-Noll-Voハッシュ
+→安全性を犠牲にしてより高速に
+→→FnvHashMapとFnvHashSetを代わりに使えば良い
+
+HashMapとHashSetは省略可能なハッシュアルゴリズムを示す型パラメータを取ることができる
+
+16.9 標準コレクションを超えて
 
 
 
