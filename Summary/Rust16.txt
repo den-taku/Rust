@@ -408,11 +408,80 @@ BinaryHeapはイテレート可能だが大きい順で返すとじゃ限らな�
 
 16.6 HashMap<K, V>とBTreeMap<K, V>
 
+マップ(map):
+キーと値のペア(エントリ(entries)と呼ぶ)のコレクション
+同じキーを持つエントリは1つしかない
+→検索用のテーブル
 
+HashMap
+→キーと値とをハッシュテーブルに保持する
+→→キー型KはハッシュトレイトHashと等価判定トレイトEqを実装していなければならない
+→→ハッシュコード、キー、値が保持されている
 
+BTreeMap
+→エントリーをキーの順番で木構造に保持する
+→→キー型KはOrdを実装していなければならない
+→→エントリをノード(node)の格納する。ノードはキーと値のペアを保持する
 
+近代的なハードウェアではB-木の方が高速なためBTreeMapでは平衡二分木ではなくB-木で実装
+→B-木の方がデータの局所性(locality)が高いのでCPUのキャッシュミスを少なくできる
 
+HashMap::new(), BTreeMap::new():
+新しい空のマップを作る
 
+iter.collect():
+キーと値のペアの列から各マップを作る(Iterator<Item=(K, V)>)
+
+HashMap::with_capacity(n):
+最小でもnエントリを保持する領域を持つ新たな空のハッシュマップを作成する
+
+map.len():
+エントリの数を返す
+
+map.is_empty():
+mapにエントリが1つもなければtrueを返す
+
+map.contains_key(&key):
+指定されたkeyを持つエントリがあればtrueを返す
+
+map.get(&key):
+keyを持つエントリを検索してOption<&V>で返す
+
+map.get_mut(&key):
+値へのmut参照を返す
+
+一般にマップはキーの変化を許容しない
+
+map.insert(key, value):
+エントリ(key, value)をmapに追加する
+すでに同じkeyを持つエントリが存在したら上書きする(その場合入っていた値を返す(Option<V>))
+
+map.extend(iterable):
+iterableから取り出した(K, V)をmapに追加
+
+map.append(&mut map2):
+map2のエントリを全てmap1に移動する(実行後map2は空になる)
+
+map.remove(&key):
+keyを持つエントリを検索し削除する
+削除した場合値を返す(Option<V>)
+
+map.clear():
+全てのエントリを削除する
+
+mapに対してmap[&key]のようにしてインデックスのように検索可能
+→マップは組み込みトレイトIndexを実装している
+→→ただしkeyが存在しなかった場合panic終了するので確実に値が存在するときのみ使う
+
+&keyを引数にとる上記メソッドは厳密に&Kである必要はない
+→詳細は13.8 BorrowとBorrowMutを参照
+
+BTreeMap<K, V>はキーをソートした状態に保つ
+
+btree_map.split_at(&key):
+keyよりも小さいもおをbtree_mapに残しそれ以外のエントリを格納する新たなBTreeMap<K, V>を返す
+
+16.6.1 エントリ
 
 
 
