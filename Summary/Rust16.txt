@@ -367,10 +367,22 @@ vec_deque![]マクロはないがfromメソッドを使えば簡単に作成可�
 
 16.4 LinkedList<T>
 
+連結リスト(linked list)
+→個々の値が個別にヒープ上に確保される
 
+std::collections::LinkedList<T>は双方向連結リスト
+→VecDequeのメソッドの一部をサポートする
+→→frontやbackに対する操作、イテレータ、LinkedList::new()など
 
+要素にインデックスでアクセスするメソッドは使えない(非効率なので)
 
+Rust1.17の時点ではまだAPIが未完成
 
+LinkedListがVecDequeよりも優れている点:
+2つのリストの連結がとても高速(いくつかのポインタの書き換えだけで実現できる)
+→lest.append(&mut list2)
+
+16.5 BinaryHeap<T>
 
 
 
