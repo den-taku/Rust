@@ -514,6 +514,27 @@ pub enum Entry<'a, K: 'a, V: 'a> {
 
 16.2.2 マップに対するイテレート
 
+マップに対してイテレートを行う方法はいくつかある
+
+・値に対するイテレート(for (k, v) in map)は(K, V)のペアを生成(マップは消費)
+・共有参照(for (k, v) in &map)は(&K, &V)のペアを生成
+・可変参照(for (k, v) in &mut map)は(&K, &mut V)のペアを生成
+
+.iterや.iter_mut()メソッドは参照を生成するイテレータを返す
+
+map.keys():
+キーの参照だけを生成するイテレータを返す
+
+map.values():
+値の参照だけを生成するイテレータを返す
+
+map.values_mut():
+値の可変参照を生成するイテレータを返す
+
+HashMapのイテレータは順番を予測不可
+BTreeMapはキーの順番通り
+
+16.7 HashSet<T>とBTreeSet<T>
 
 
 
