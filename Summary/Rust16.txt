@@ -483,8 +483,36 @@ keyよりも小さいもおをbtree_mapに残しそれ以外のエントリを�
 
 16.6.1 エントリ
 
+HashMapとBTreeMapは対応するEntry型を持つ
 
+エントリの目的は一度の検索でEntry値を生成させることで検索回数を減らすこと
 
+Entry値はマップ中のエントリが占有している場所かエントリがまだない空き地への可変参照のように振る舞う
+
+map.entry(key):
+指定されたkeyに対するEntryを返す。なければ空のEntryを返す
+
+pub fn entry<'a>(&'a mut self, key:K) -> Entry<'a, K, V>
+
+Entry型には生存期間パラメータ'aがある
+→マップから借用するmut参照の一種なので
+→→存在する限りマップに対して排他的なアクセス権を持つ
+
+map.entry(key).or_insert(value):
+mapに指定したkeyを持つエントリがなければvalueを挿入し、keyの値へのmut参照を返す
+
+map.entry(key).or_insert_with(default_fn):
+上とほぼ同じ。デフォルト値の生成にdefault_fnを用いる
+
+HashMap(およびBTreeMap)のEntry型は下のように定義されている
+
+// (in std::collections::hash_map)
+pub enum Entry<'a, K: 'a, V: 'a> {
+    Occupied(OccupiedEntry<'a, K, V>),
+    Vacant(VacantEntry<'a, K, V>)
+}
+
+16.2.2 マップに対するイテレート
 
 
 
