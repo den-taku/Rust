@@ -323,8 +323,49 @@ Rustでは共有参照、可変参照の生存期間の制約によってエラ�
 
 16.3 VecDeque<T>
 
+Vec<T>で効率的に追加・削除できるのは末尾だけ
 
+std::collections::VecDeque<T>:
+デック(deque)と呼ばれる二重終端キュー
+→先頭と末尾の双方に対して効率的に追加・削除できる
 
+deque.push_front(value):
+キューの先端に値を追加する
+
+deque.push_back(value):
+キューの末尾に値を追加する
+
+deque.pop_front():
+キューの先頭から値を削除して返す
+
+deque.pop_back():
+キューの末尾から値を削除して返す
+
+deque.front(), deque.back():
+キューの先頭および末尾への参照を返す
+
+deque.front_mut(), deque.back_mut():
+それぞれOption<&mut T>を返す
+
+VecDequeはリングバッファで実装されている
+→ヒープ領域の先頭から常にデータが始まるわけではない
+→領域の末尾と先頭が仮想的に接続している
+
+VecDeque::new(), VecDeque::with_capacity(n)
+→Vecと同様にキューを作成する
+→→Vecメソッドの多くはVecDequeでも実装されている
+
+二重終端キューでも値、共有参照、可変参照それぞれに対してiterable
+
+二重先端キューはスライスのメソッドを全て継承することはできない
+→一度VecDequeからVecに変換し操作して元に戻すという方法をとる
+
+Vec::from(deque)で二重終端キューをベクタに(O(n))
+VecDecue::from(vec)でベクタを二重終端キューに(O(n))(ベクタが大きい場合でも一般より高速)
+
+vec_deque![]マクロはないがfromメソッドを使えば簡単に作成可能
+
+16.4 LinkedList<T>
 
 
 
