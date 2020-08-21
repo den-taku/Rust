@@ -384,7 +384,29 @@ LinkedListがVecDequeよりも優れている点:
 
 16.5 BinaryHeap<T>
 
+最大値が常にキューの先頭に浮き上がって来るように緩やかに構造化されたコレクション
 
+よく使われるメソッドは次に3つ
+
+heap.push(value):
+ヒープに値を追加する
+
+heap.pop():
+ヒープから最大値を削除して返す
+
+heap.peek():
+ヒープの最大値の参照を返す
+
+BinaryHeapはVecのメソッドの一部をサポートしている
+→BinaryHeap()::new()、.len()、.is_empty()、.capacity()、.clear()、.append(&mut heap)など
+
+組み込みトレイトのOrdを実装した任意の型に使える
+→タスクキューを作るのに適している(タスク構造体を定義すれば良い)
+
+BinaryHeapはイテレート可能だが大きい順で返すとじゃ限らない
+→while let Some(task) = heap.pop()で回せば良い
+
+16.6 HashMap<K, V>とBTreeMap<K, V>
 
 
 
