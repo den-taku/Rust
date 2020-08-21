@@ -536,8 +536,43 @@ BTreeMapはキーの順番通り
 
 16.7 HashSet<T>とBTreeSet<T>
 
+セット
+→ある値が含まれているかの判定を高速にできるコレクション
+→全探索ではなくハッシュ検索する
 
+セットに同じ値は入れることができない
 
+キーだけを持つマップのようなもの
+→実際HashMap<T, ()>とBTreeMap<T, ()>をラップしたもの
+
+HashSet::new(), BTreeSet::new():
+新しいセットを作る
+
+iter.collect():
+任意のイテレータから新しいセットを作る(重複valueはドロップ)
+
+HashSet::with_capacity(n):
+少なくともnこの要素を追加できるヒープ領域を持った空のセットを作る
+
+set.len():
+要素数を返す
+
+set.is_empty():
+空集合ならtrueを返す
+
+set.contains(&value):
+valueが含まれていたらtrueを返す
+
+set.insert(value):
+valueを挿入する。成否を真偽値で返す
+
+set.remove(&value):
+valueを取り除く。成否を真偽値で返す
+
+マップの場合と同様に参照で検索するメソッドはTから参照を借用できる全ての型に対するジェネリックメソッド
+→詳細は13.8
+
+16.7.1 セットのイテレート
 
 
 
