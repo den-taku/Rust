@@ -586,7 +586,16 @@ setの要素への参照に対するイテレータを返す
 
 16.7.2 値が等しいが別のものの場合
 
+値としては等しいが実体としての相違にこだわる場合がある(メモリ上での位置など)
 
+set.get(&value):
+valueと等しいsetの要素への共有参照をOptionで返す
+
+set.take(&value):
+set.remove(value)と似ているが削除にはその値を返す
+
+set.replace(value):
+setにvalueと等しい値がすでに入っていればそれを置き換えて古い値をOptionで返す
 
 
 
