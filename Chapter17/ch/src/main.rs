@@ -13,4 +13,7 @@ fn main() {
     if let Some(num) = '3'.to_digit(10) {
         println!("{}", num);
     }
+    let ch = '\u{766}';
+    println!("{}", ch);
+    println!("{}", ch as u8);
 }
