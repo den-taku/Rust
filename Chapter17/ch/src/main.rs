@@ -34,4 +34,18 @@ fn main() {
     println!("{}", choco.drain(3..6).collect::<String>());
     println!("{}", choco);
 
+    let haystack = "One fine dauy, in the middle of the night";
+    if let Some(num) = haystack.find(',') {
+        println!("{}", num);
+    }
+    if let Some(num) = haystack.find("night") {
+        println!("{}", num);
+    }
+    if let Some(num) = haystack.find(char::is_whitespace) {
+        println!("{}", num);
+    }
+    println!("{}", "## Elephants"
+                   .trim_left_matches(|ch: char| ch == '#' || ch.is_whitespace()));
+    let code = "\t    function nodele() {";
+    println!("{}", code.trim_left_matches(&[' ', '\t'] as &[char]));
 }
