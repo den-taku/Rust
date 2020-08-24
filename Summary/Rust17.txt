@@ -10,6 +10,10 @@
 
 17.1 Unicodeについて
 
+Rustの文字列はUnicodeを対象に設計されている
+
+17.1.1 ASCII、Latin-1、Unicode
+
 
 
 
