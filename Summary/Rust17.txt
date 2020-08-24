@@ -67,7 +67,24 @@ Unicodeのコードポイントを保持する32bitの値
 
 17.2.1 文字の分類
 
+文字を一般的なカテゴリに分類するメソッドがある(真偽値を返す)
 
+ch.is_numeric():
+数字
+
+ch.is_alphabetic():
+アルファベット文字
+
+ch.is_alphanumerric():
+数字もしくはアルファベット
+
+ch.is_whitespace():
+ホワイトスペース
+
+ch.is_control():
+制御文字
+
+17.2.2 数字の取り扱い
 
 
 
