@@ -180,6 +180,36 @@ slice.is_char_boundary(i):
 
 17.3.3 テキストの追加と挿入
 
+以下のメソッドはStringにテキストを追加する
+
+string.push(ch):
+stringの末尾にchを追加
+
+string.push_str(slice):
+sliceを全て末尾に追加
+
+slring.extend(iter):
+イテレータのアイテムをstringに追加
+→std::iter::Extendの実装によるもの
+
+string.insert(i, ch):
+chをバイトオフセットiの場所に挿入する
+→文字列の長さの二乗の時間がかかる
+
+string.insert_str(i, slice):
+sliceをinsertする
+
+Stringはstd::fmt::Writeを実装している
+→write!マクロやwriteln!マクロでStringにフォーマットしたテキストを追加できる
+
+write!、writeln!は出力ストリームに書き出す
+→Resultを返す
+
+StringはAdd<&str>とAddAssign<&str>を実装しているので+や+=を使える
+→対称性はないので&strを左オペランドには取れない
+
+17.3.4 テキストの削除
+
 
 
 

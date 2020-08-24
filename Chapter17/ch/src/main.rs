@@ -1,3 +1,5 @@
+use std::fmt::Write;
+
 fn main() {
     println!("{}", '4'.is_numeric());
     println!("{}", '\n'.is_control());
@@ -21,4 +23,10 @@ fn main() {
     let spaceless: String =
         spacey.chars().filter(|c| !c.is_whitespace()).collect();
     println!("{} -> {}", spacey, spaceless);
+
+    let mut letter = String::new();
+    writeln!(letter, "Whose {} these are I thinl I know", "rutabagas").expect("err");
+    writeln!(letter, "His house is in village though;").expect("err");
+    letter.pop();
+    println!("{}", letter);
 }
