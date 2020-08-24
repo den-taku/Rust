@@ -86,7 +86,16 @@ ch.is_control():
 
 17.2.2 数字の取り扱い
 
+ch.to_digit(radix):
+chが基数radixのもとで数字であるかを判断しOption<u32>で返す
 
+std::char::from_digit(num, radix):
+u32の数値numを可能ならばcharに変換する(10よりも大きい場合はchは小文字)
+
+ch.is_digit(radix):
+もしchが基数radixの元でASCII数字ならばtrueを返す
+
+17.2.3 文字の大文字小文字変換
 
 
 
