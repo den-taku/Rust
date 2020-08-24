@@ -210,6 +210,23 @@ StringはAdd<&str>とAddAssign<&str>を実装しているので+や+=を使え�
 
 17.3.4 テキストの削除
 
+string.clear():
+stringを空にする
+
+string.trucate(n):
+バイトオフセットn以降の持っ寺を全て捨てる
+
+string.pop():
+最後の文字があれば削除して返す
+
+string.remove(i):
+バイトオフセットiの文字をstringから削除して返す
+
+string.drain(range):
+rangeのイテレータを返し、イテレータがdropされるとその範囲の文字を削除する
+→削除したいだけならアイテムを取り出さずにdropすれば良い
+
+17.3.5 検索とイテレート関数の名前付け
 
 
 

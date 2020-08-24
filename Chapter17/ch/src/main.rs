@@ -29,4 +29,9 @@ fn main() {
     writeln!(letter, "His house is in village though;").expect("err");
     letter.pop();
     println!("{}", letter);
+
+    let mut choco = "chocolate".to_string();
+    println!("{}", choco.drain(3..6).collect::<String>());
+    println!("{}", choco);
+
 }
