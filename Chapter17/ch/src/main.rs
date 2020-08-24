@@ -16,4 +16,9 @@ fn main() {
     let ch = '\u{766}';
     println!("{}", ch);
     println!("{}", ch as u8);
+
+    let spacey = "man hat tan";
+    let spaceless: String =
+        spacey.chars().filter(|c| !c.is_whitespace()).collect();
+    println!("{} -> {}", spacey, spaceless);
 }

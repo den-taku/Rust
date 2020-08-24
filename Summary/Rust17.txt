@@ -135,8 +135,27 @@ String
 
 17.3.1 String値の作成
 
+String値を作るメソッドはいくつかある
 
+String::new():
+新たな空の文字列を返す
 
+String::with_capacity(n):
+ヒープ上に少なくともnバイトを保持できるバッファを確保してnewする
+
+文字列にもcapacity、reserve、shrink_to_fitメソッドがあるがほぼ不要
+
+slice.to_string():
+sliceをコピーして新しい文字列をヒープ上に作る
+
+iter.collect():
+イテレータのアイテムをつなぎ合わせて文字列を構築する
+→アイテムはchar、&str、Stringのいずれでも良い
+
+&strはCloneトレイトを実装できないためToOwnedトレイトを実装する
+→slice.to_owned()はsliceをコピーした新しいStringを返す
+
+17.3.2 単純な検査
 
 
 
