@@ -8,4 +8,9 @@ fn main() {
     if let Some(ch) = std::char::from_digit(11, 16) {
         println!("{}", ch);
     }
+    println!("{}", '\u{307}');
+    println!("{}", '\u{130}');
+    if let Some(num) = '3'.to_digit(10) {
+        println!("{}", num);
+    }
 }

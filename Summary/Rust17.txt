@@ -97,7 +97,15 @@ ch.is_digit(radix):
 
 17.2.3 文字の大文字小文字変換
 
+ch.is_lowercase()、ch.is_uppercase():
+chが小文字か大文字かを返す
 
+ch.to_lowercase()、ch.to_uppercase():
+chに対応する小文字列もしくは大文字列を生成するイテレータを返す(Optionのイテレータ)
+→大文字小文字の変換は1文字とは限らないのでイテレータで返す
+→→便宜上このイテレータはstd::fmt::Displayを実装しているので直接println!マクロなどに渡せる
+
+17.2.4 整数との間の変換
 
 
 
