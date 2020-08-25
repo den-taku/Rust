@@ -314,7 +314,18 @@ slice.match_indices(pattern):
 
 17.3.9 トリミング
 
+文字列のトリミング:
+文字列の冒頭もしくは末尾からなんらかのテキストを削除すること
+→ファイルからの入力を整えるのに便利
 
+slice.trim():
+冒頭と末尾にあるホワイトスペースを削除したsliceのサブスライスを返す
+→slice.trim_left()は冒頭のみ、slice.trim_right()は末尾のみ取り除く
+
+slice.trim_matches(pattern):
+冒頭と末尾からpatternにマッチするものを全て削除したサブスライスを返す
+
+17.3.10 文字列の大文字小文字変換
 
 
 

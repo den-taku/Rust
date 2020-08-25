@@ -70,5 +70,7 @@ fn main() {
     for e in &poem.split_whitespace().collect::<Vec<_>>() {
         println!("{}", e);
     }
+    println!("{}", "\t*.rs ".trim());
+    println!("{}", "001990".trim_left_matches('0'));
 }
 
