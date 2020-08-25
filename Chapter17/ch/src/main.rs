@@ -48,4 +48,19 @@ fn main() {
                    .trim_left_matches(|ch: char| ch == '#' || ch.is_whitespace()));
     let code = "\t    function nodele() {";
     println!("{}", code.trim_left_matches(&[' ', '\t'] as &[char]));
+
+    let quip = "We also know there are known unknowns";
+    if let Some(i) = quip.find("ya know") {
+        println!("{}", i);
+    } else {
+        println!("\"ya know\" is None");
+    }
+
+    println!("{}", 
+             "The only thing we have to fear is fear itself"
+             .replace("fear", "spin"));
+    println!("{}",
+            "`Borrow` and `BorrowMut`"
+            .replace(|ch:char| !ch.is_alphanumeric(), ""));
 }
+
