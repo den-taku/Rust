@@ -389,6 +389,16 @@ sliceとStringはstd::borrow::Borrow<str>トレイトも実装している
 
 17.3.14 UTF-8としてのアクセス
 
+slice.as_bytes():
+sliceのバイト列を&[u8]として借用する
+→sliceが整形式であることを保証し続けられる
+
+slice.into_bytes():
+stringの所有権を取得しバイト列値であるVec<u8>を返す
+→stringではなくなるので自由に中身を変更できる
+
+17.3.15 UTF-8データからのテキストの作成
+
 
 
 
