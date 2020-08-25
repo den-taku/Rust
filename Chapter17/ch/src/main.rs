@@ -62,5 +62,13 @@ fn main() {
     println!("{}",
             "`Borrow` and `BorrowMut`"
             .replace(|ch:char| !ch.is_alphanumeric(), ""));
+
+    let poem = "This is just  to say\n\
+                I have eaten\n\
+                the plums\n\
+                again\n";
+    for e in &poem.split_whitespace().collect::<Vec<_>>() {
+        println!("{}", e);
+    }
 }
 

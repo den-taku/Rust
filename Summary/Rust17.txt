@@ -271,6 +271,51 @@ slice.replacen(pattern, replacement, n):
 
 17.3.8 テキストに対するイテレート
 
+split系メソッドとmatch系メソッドは相補関係にある
+
+slice.chars():
+各文字を生成するイテレータを返する
+
+slice.chars_indices():
+各文字とバイトオフセットを生成するイテレータを返す
+→.chars().enumerate()とは異なりスライス上でのバイトオフセットを返す
+
+slice.bytes():
+各バイトを生成するイテレータを返す
+UTF-8エンコードされた値をそのまま生成
+
+slice.lines():
+各行を生成するイテレータを返す
+
+slice.split(pattern):
+patternにマッチする部分で区切られた範囲を生成するイテレータを返す
+
+slice.rsplit(pattern):
+sliceの末尾からsplitする
+
+slice.split_terminator(pattern)、slice.rsplit_terminator(pattern):
+patternがセパレータではなくターミネータとしてsplitされる
+→末尾とマッチした時に空文字列を生成しない
+
+slice.splitn(n, pattern):
+最大でもnスライスにしか分割しない
+
+slice.split_whitespace():
+ホワイトスペース(連続したものは1つ分扱い)で分割したイテレータを返す
+
+slice.matches(pattern):
+patternにマッチした部分を生成するイテレータを返す
+
+slice.rmatches(pattern):
+末尾から処理する
+
+slice.match_indices(pattern):
+(offset, match)のペアを生成するイテレータを返す
+
+17.3.9 トリミング
+
+
+
 
 
 
