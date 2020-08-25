@@ -379,7 +379,15 @@ DisplayやDebugはformat!マクロ等がフォーマットする際に用いる�
 
 17.3.13 他のテキストに類する型としての借用
 
+sliceを様々な形で借用することができる
 
+sliceとStringは各種AsRefトレイトを実装している
+→sliceやStringを直接引数として渡せる
+
+sliceとStringはstd::borrow::Borrow<str>トレイトも実装している
+→HashMapやBTreeMapでStringをキーとして使える
+
+17.3.14 UTF-8としてのアクセス
 
 
 
