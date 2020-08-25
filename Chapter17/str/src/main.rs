@@ -28,4 +28,16 @@ fn main() {
     println!("{}", formatted_addr.to_string());
     let addresses = vec![address, IpAddr::from_str("192.168.0.1").expect("err")];
     println!("{}", format!("{:?}", addresses));
+
+    let good_utf8: Vec<u8> = vec![0xe9, 0x8c, 0x86];
+    if let Some(string) = String::from_utf8(good_utf8).ok() {
+        println!("{}", string);
+    }
+    
+    let bad_utf8: Vec<u8> = vec![0x9f, 0xf0, 0xa6, 0x80];
+    let result = String::from_utf8(bad_utf8);
+    assert!(result.is_err());
+    // Since String::from_utf8 failed, it didn't consume the original
+    // vector, and the error value hands ii back to us unharmed.
+    println!("{}", format!("{:?}", result.unwrap_err().into_bytes()));
 }

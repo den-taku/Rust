@@ -399,7 +399,30 @@ stringの所有権を取得しバイト列値であるVec<u8>を返す
 
 17.3.15 UTF-8データからのテキストの作成
 
+UTF-8のデータが入っていると思われるバイトブロック→Stringやスライスにする方法
+→複数ある。エラー処理の方法が異なる
 
+str::from_utf8(byte_slice):
+バイトスライス&[u8]を引数としてResultを返す(成功時はOk(&str))
+
+String::from_utf8(vec):
+値渡しのVec<u8>から文字列の生成を試みる
+→Ok(string)またはErr(e)を返す
+→→e:FromUTF8Error型なのでe.into_bytes()で元のベクタvecを取り戻せる
+
+String::from_utf8_lossy(byte_slice):
+バイト列の共有スライス&[u8]からStringもしくは&strを作成する
+→常に成功する(おかしい部分を別の文字で置き換えるため)
+→→返り値はCow<str>(正しい整形式ならそのまま借用した&str、非整形式なら新たに確保された文字列になる)
+→→→Cow<str>については次節で詳細に説明
+
+Vec<u8>に整形式なUTF-8が確実に入っている
+→unsafeな関数String::from_utf8_uncheckedを呼べば良い
+→→Vec<u8>の中身をStringにチェックせずに包んで返す
+
+同様にstr::from_utf8_uncheckedは&[u8]をチェックなしで&[str]にする
+
+17.3.16 ヒープ確保の遅延
 
 
 
