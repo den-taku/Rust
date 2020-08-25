@@ -327,6 +327,10 @@ slice.trim_matches(pattern):
 
 17.3.10 文字列の大文字小文字変換
 
+slice.to_uppercase()、slice.to_lowercase():
+sliceを大文字ないし小文字に変換したテキストを保持する新たに確保した文字列を返す
+
+17.3.11 他の型を文字列からパース
 
 
 
