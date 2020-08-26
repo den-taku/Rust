@@ -73,3 +73,4 @@ fn main() {
     desserts[0].push_str(" (fictional)");
     desserts[1].push_str(" (real)");
 }
+
