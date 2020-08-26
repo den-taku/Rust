@@ -1,10 +1,12 @@
 extern crate regex;
+extern crate unicode_normalization;
 
 #[macro_use]
 extern crate lazy_static;
 
 use regex::Regex;
 use std::io::BufRead;
+use unicode_normalization::UnicodeNormalization;
 
 lazy_static! {
     static ref SEMVER: Regex
@@ -56,4 +58,6 @@ fn main() {
     // }
 
     assert!("th\u{e9}" != "the\u{301}");
+
+    assert_eq!("① Di\u{fb03}culty".nfkc().collect::<String>(), "1 Difficulty");
 }

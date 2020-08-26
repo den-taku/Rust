@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 regex = "0.2.2"
 lazy_static = "0.2.8"
+unicode-normalization = "0.1.5"
