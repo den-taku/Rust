@@ -16,3 +16,4 @@ fn describe(error: &Error) -> Cow<'static, str> {
 fn main() {
     println!("Disaster has struck: {}", describe(&error));
 }
+
