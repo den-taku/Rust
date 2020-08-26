@@ -1,6 +1,16 @@
 extern crate regex;
 
+#[macro_use]
+extern crate lazy_static;
+
 use regex::Regex;
+use std::io::BufRead;
+
+lazy_static! {
+    static ref SEMVER: Regex
+        = Regex::new(r"(\d+)\.(\d+)\.(\d+)(-[-.[:alnum:]])?")
+            .expect("error parsing regex");
+}
 
 fn main() {
     // A semver version number, like 0.2.1.
@@ -36,4 +46,12 @@ fn main() {
     let captures: Vec<_> = semver.captures_iter(haystack)
         .collect();
     println!("{:#?}", captures);
+
+    let stdin = std::io::stdin();
+    for line in  stdin.lock().lines() {
+        let line = line.expect("err");
+        if let Some(match_) = SEMVER.find(&line) {
+            println!("{}", match_.as_str());
+        }
+    }
 }
