@@ -26,4 +26,7 @@ fn main() {
     let impostor = Rc::new("mazurka".to_string());
     println!("text:     {}, {}, {}", original, cloned, impostor);
     println!("pointers: {:p}, {:p}, {:p}", original, cloned, impostor);
+
+    println!("{mode} {2} {} {}",
+        "people", "eater", "purple", mode="flying");
 }
