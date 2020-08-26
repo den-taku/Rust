@@ -5,4 +5,5 @@ fn main() {
     println!("{{a, c}} ⊂ {{a, b, c}}");
     println!("{:*<4}", "th\u{e9}");
     println!("{:*<4}", "th\u{301}");
+    println!("{:=^12}", 1234);
 }
