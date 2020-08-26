@@ -47,11 +47,13 @@ fn main() {
         .collect();
     println!("{:#?}", captures);
 
-    let stdin = std::io::stdin();
-    for line in  stdin.lock().lines() {
-        let line = line.expect("err");
-        if let Some(match_) = SEMVER.find(&line) {
-            println!("{}", match_.as_str());
-        }
-    }
+    // let stdin = std::io::stdin();
+    // for line in  stdin.lock().lines() {
+    //     let line = line.expect("err");
+    //     if let Some(match_) = SEMVER.find(&line) {
+    //         println!("{}", match_.as_str());
+    //     }
+    // }
+
+    assert!("th\u{e9}" != "the\u{301}");
 }
