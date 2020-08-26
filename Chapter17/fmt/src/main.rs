@@ -1,4 +1,5 @@
 use std::collections::HashMap;
+use std::rc::Rc;
 
 #[derive(Debug)]
 struct Complex { r: f64, i: f64 }
@@ -19,4 +20,10 @@ fn main() {
 
     let third = Complex{ r: -0.5, i: f64::sqrt(0.75) };
     println!("{:?}", third);
+
+    let original = Rc::new("mazurka".to_string());    
+    let cloned = original.clone();
+    let impostor = Rc::new("mazurka".to_string());
+    println!("text:     {}, {}, {}", original, cloned, impostor);
+    println!("pointers: {:p}, {:p}, {:p}", original, cloned, impostor);
 }
