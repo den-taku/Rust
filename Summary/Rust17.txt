@@ -618,6 +618,8 @@ Arguments値はポインタを集めるだけなのでコストがかからな�
 
 17.5 正規表現
 
+正規表現についてはhttps://murashun.jp/blog/20190215-01.htmlを参照
+
 外部クレートのregex:
 Rust公式の正規表現ライブラリ
 →通常の検索とマッチ機能を提供する
@@ -629,9 +631,30 @@ Unicodeをサポートするが通常のバイト列も検索することがで�
 
 regexを使うにはCargo.tomlに追加しexternする必要がある
 
+17.5.2 Regexの基本的な使い方
 
+Regex値はパースされ使える状態になった正規表現を表す
 
+Regex::newコンストラクタ
+→&strを正規表現として結果をResultとして返す
 
+regix.is_match(&str)でマッチするかどうか返す
+
+Regex::capturesメソッド
+→最初にマッチする文字列を検索し正規表現式中の個々のグループに対するマッチ情報を保持したregex::Capturesを返す
+→→Capturesを範囲外インデックス参照するとpanicを起こす
+
+個々のグループがマッチしたかをテスト
+→Captures::getを用いる(Option<regex::Match>を返す)
+
+find_iter
+→文字列に対して冒頭から末尾まで正規表現に重複なくマッチしたMatch値を生成するイテレータを返す
+
+captures_iter
+→Match値ではなく全てのキャプチャしたグループを納めたCaptures値を生成するイテレータを返す
+→→Captures値を報告すると実行が遅くなるので必要ないならCaptures値を返さない方が良い
+
+17.5.2 Regex値の遅延作成
 
 
 
