@@ -29,4 +29,8 @@ fn main() {
 
     println!("{mode} {2} {} {}",
         "people", "eater", "purple", mode="flying");
+
+    fn get_width() -> usize { 20 }
+    let content = "hoge";
+    println!("{}", format!("{:*>1$}", content, get_width()));
 }
