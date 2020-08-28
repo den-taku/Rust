@@ -17,6 +17,20 @@ Writeを実装した値
 
 18.1 ReaderとWriter
 
+readerはバイト列を読み出すことのできる値
+
+writerはプログラムからバイト列を書き込むことのできる値
+
+readerとwriterには標準トレイトが用意されている
+→様々な入出力チャンネルに対して動作するジェネリックなコードが広く書かれている
+
+std::ioの4つのトレイトRead、BufRead、Write、Seekはとてもよく使われる
+→これらだけを含んだpreludeモジュールが用意されている
+
+std::ioモジュールそのものもインポートする(use std::io::self)
+→ioをstd::ioの別名として使える
+
+18.1.1 Reader
 
 
 
