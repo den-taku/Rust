@@ -296,7 +296,51 @@ std::path::PathBuf →ヒープ上に確保されたPathを所有
 
 18.2.2 PathとPathBufのメソッド
 
+Path::new(str):
+&strや&OsStrを&Pathに変換する。文字列はコピーされず元のバイト列を指すようになる
 
+path.parent():
+pathの親ディレクトリがあればそれを返す(Option<&Path>)
+→これもコピーを行わない
+
+path.file_name():
+pathの最後の構成要素があればそれを返す(Option<&OsStr>)
+
+path.is_absolute()、path.is_relative():
+絶対パスと相対パスを識別する
+
+path1.join(path2):
+2つのパスをつなげて新たなPathBufを返す
+→path2が絶対パスならこのメソッドはpath2のコピーを返す
+
+path.components():
+指定したパスを構成要素の分解しイテレータとして返す
+→アイテムの型はstd::path::Component
+
+pub enum Component<'a> {
+    Prefox(PrefixComponent<'a>), // Windows-only: a drive letter or share
+
+    RootDir,                     // the root directory, `/` or `\`
+    CurDir,                      // the `.` special directory
+    ParentDir,                   // the `..` special directory
+    Normal(&'a OsStr)            // plain file and directory names
+}
+→詳細はオンラインドキュメント参照
+
+これらはメモリ上の文字列に対して動作する
+→Pathにはファイルシステムに対して問い合わせを行うメソッドも用意されている(詳細:オンラインドキュメント)
+
+path.to_str():
+Pathを文字列に変換しOption<&str>を返す
+
+path.to_string_lossy():
+pathが有効なUTF-8でなくとも置き換え文字を使いなんらかの文字列を返す
+→返り値の型はstd::borrow::Cow<Str>
+
+path.display():
+パスを出力するためのメソッド(std::fmt::Displayを実装する値を返す)
+
+18.2.3 ファイルシステムアクセス関数
 
 
 
