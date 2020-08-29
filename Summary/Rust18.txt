@@ -50,7 +50,7 @@ reader.read(&mut buffer):
  →→io::ErrorKind::Interruptedだけは単にreadをやり直せば良い
 
 Readトレイトを新たなデータ源に対して実装する
-→readerから何らかのデータを読み出そうとすると面倒
+→readerから何らかのデータを読み出そうとすると面倒(OSの細かい処理を考えるので)
 →→デフォルト実装されている高水準メソッドが用意されている
 
 reader.read_to_end(&mut byte_vec):
@@ -140,12 +140,40 @@ impl<T, E, C> FromIterator<Result<T, E>> for Result<C, E>
 
 18.1.5 writer
 
+println!():
+テキスト出力
 
+print!():
+末尾に'\n'を追加しないテキスト出力
 
+write!とwriteln!
+→2つの相違点を除きprint!とprintln!と同じ
 
+・writeマクロは第一引数にwriterをとる
+・Resultを返す
 
+Writeトレイトには3つのメソッドがある
 
+writer.write(&buf):
+スライスbuf内のバイト列の一部を下敷きになっているストリームに書き出す
+返り値の型はio::Result<usize>
+→低レベルなメソッドなのでReader::read()と同様に直接使うべきではない
 
+writer.write_all(&buf):
+スライスbuf内の全てのバイト列を書き出す。返り値はResult<()>
+
+writer.flush():
+バッファされたデータを下敷きとなっているストリームに書き出す。返り値はResult<()>
+
+writerもdropされると自動的にクローズされる
+
+BufWriter::new(writer)で任意のwriterにバッファリングを追加できる
+
+BufWriterがドロップされるとバッファされていたデータは全て下敷きになっているwriterに書き出される
+→ただしこの時のエラーは無視される
+→→明示的に.flush()を呼べば良い
+
+18.1.6 ファイル
 
 
 
