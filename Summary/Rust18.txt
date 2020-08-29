@@ -209,6 +209,50 @@ seek(SeekFrom::Start(0))やseek(SeekFrom::Current(-8))のようにかく
 
 18.1.8 他のreader型、writer型
 
+io::stdin():
+標準入力ストリームに対するreader(:io::Stdin)を返す
+→個々のスレッドは排他ロックを取得し解放するようにしなければならない(.lock())
+→→ただしio::stdin().lock()と書くことはできない
+
+io::stdout()、io::stderr():
+標準出力ストリームと標準エラーストリームに対するwriterを返す(排他ロックとlockを持つ)
+
+Vec<u8>
+→Writeを実装する
+
+String
+→Writeを実装していない
+→→まずVec<u8>に書き出してからString::from_utf8(vec)を使って変換する
+
+Cursor::new(buf):
+bufから読み出すバッファ付きreader、Cursorを生成する
+→bufはAsRed<[u8]>を実装する任意の型
+
+Cursorはbufそのものと次に読み出す場所を示すオフセットの整数しか持たない
+
+CursorはRead、BufRead、Seekを実装している
+bufが&mut [u8]かVec<u8>ならWriteも実装する
+→Cursorへの書き出しはbuf上のバイト列を現在位置から上書き
+
+std::net::TcpStream:
+TCPネットワーク接続を表す
+
+std::process::Command:
+子プロセスを起動する
+→その際子プロセスの標準入力へデータをパイプで送ることができる
+
+std::ioモジュールには簡単なreaderやwriterを返す関数がいくつかある
+
+io::sink():
+何もしないwriter。writeメソッドはOkを返すがデータは捨てられる
+
+io::empty():
+何もしないreader。読み出しは常に成功するが入力の終了を返す
+
+io::repeat(byte):
+指定したバイト値を無限に繰り返すreaderを返す
+
+18.1.9 バイナリデータ、圧縮、シリアライズ
 
 
 
