@@ -125,7 +125,20 @@ BufReader::new(reader)を使えばバッファされていないreaderからバ�
 
 18.1.4 行に対するcollect
 
+readerのメソッドのうちいくつかはResultを生成するイテレータを返す
+→Resultを取り除かなければならない
 
+一番簡単な方法はforループ中でアイテムを1つずつ処理
+
+collectを使うことだができる
+→reader.hoge().collect::<io::Result<Vec<T>>>()?;
+→→Resultに対するFromIteratorの実装が含まれているため可能
+
+impl<T, E, C> FromIterator<Result<T, E>> for Result<C, E>
+    where C: FromIterator<T> {...}
+→型Tのアイテムを型CのコレクションにcollectできるならResult<T, E>をResult<C, E>にcollectできる
+
+18.1.5 writer
 
 
 
