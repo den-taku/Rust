@@ -13,7 +13,6 @@ fn grep<R>(target: &str, reader: R) -> io::Result<()>
     Ok(())
 }
 
-
 fn main() {
     let target = "hoge"; 
 
