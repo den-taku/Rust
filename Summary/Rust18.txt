@@ -87,6 +87,29 @@ readerをクローズするメソッドはない
 
 18.1.2 バッファ付きreader
 
+効率向上のためreaderやwriterはバッファリングできる
+→データを保持するメモリブロックを持っているということ
+
+BufReadは以下のメソッドを追加する
+
+reader.read_line(&mut line):
+テキストを1行読みString型の引数lineの末尾に付け加える('\n'も含まれる)
+返り値の型はio::Result<usize>で読み込んだバイト数を返す
+→ほとんどのテキスト処理にはこのメソッドを返す
+
+reader.lines():
+入力の各行を生成するイテレータを返す(Item=io::Result<String>)
+→改行文字は含まれない
+
+reader.read_until(stop_bute, &mut byte_vec)、reader.split(stop_byte):
+文字列ではなくバイト列を扱う(StringではなくVec<u8>を生成)
+分割に用いるデリミタをstop_byteで指定
+
+BufReadには低レベルメソッドもいくつかある
+→.fill_buf()や.consume(n)を用いると内部バッファへ直接アクセスできる
+→→詳しくはオンラインドキュメントを参照すべし
+
+18.1.3 行の読み出し
 
 
 
