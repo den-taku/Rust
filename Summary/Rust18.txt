@@ -272,6 +272,29 @@ serdeクレート
 
 18.2.1 OsStrとPath
 
+OSはファイル名が有効なUnicodeであることを強制しない
+→レアケースとして扱うためにstd::ffi::OsStrとOsString
+
+OsStrはUTF-8のスーパーセット
+→Unicodeとしての有効性に関わらず扱うことができる
+
+str: Unicode文字列を扱う
+OsStr: OS上で表現された文字列を扱う
+
+PathはOsStrと全く同じ
+→ファイル名を扱うための便利なメソッドが追加されている
+→→絶対パスにも相対パスにも使用できる(個々の要素にはOsStrを使用)
+
+それぞれの文字列型には対応する所有型がある
+
+String →ヒープ上に確保されたstrを所有
+std::ffi::OsString →ヒープ上に確保されたOsStrを所有
+std::path::PathBuf →ヒープ上に確保されたPathを所有
+
+これらは全てAsRef<Path>を実装している
+→任意のファイル名型を引数とするジェネリック関数で簡単にまとめて宣言できる
+
+18.2.2 PathとPathBufのメソッド
 
 
 
