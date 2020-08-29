@@ -32,13 +32,60 @@ std::ioモジュールそのものもインポートする(use std::io::self)
 
 18.1.1 Reader
 
+std::io::Readにはデータを読み出すメソッドがいくつか用意されている
 
+reader.read(&mut buffer):
+データ源からバイト列を読み出し引数bufferに格納する
 
+ bufferの型は&mut [u8]であり最大でbuffer.len()バイト読み出す
 
+ 返り値の型はio::Result<u64>(Result<u64, io::Error>のエイリアス)
+ →u64は読み出したバイト数
+ →エラー時にはErr(err)を返す
 
+ errは表示可能だがプログラム上で解釈するため.kind()が用意されている
+ →io::ErrorKind型のエラーコードを返す
+ →→io::ErrorKind::Interruptedだけは単にreadをやり直せば良い
 
+Readトレイトを新たなデータ源に対して実装する
+→readerから何らかのデータを読み出そうとすると面倒
+→→デフォルト実装されている高水準メソッドが用意されている
 
+reader.read_to_end(&mut byte_vec):
+readerから残った入力をすベて読み出しVec<u8>のbyte_vecに追加する
 
+ 返り値の型はio::Result<(usize)>
+
+ ベクタに追加するデータ量には制限がない
+ →信頼できないデータ源に対しては注意が必要
+
+reader.read_to_string(&mut string):
+読み込んだデータをStringの後ろに繋げる
+
+ 有効なUFT-8でなければErrorKind::InvalidDataを投げる
+ →他の文字セットが使いたければencodingクレートを用いる
+
+reader.exact(&mut buf):
+与えられたバッファを満たすのにぴったりの量だけデータを読み出す
+→buf.len()バイトより前にデータが尽きたらErrorKind::UnexpectedEofを投げる
+
+加えてreaderを受け取りイテレータや別のreaderを返す4つのアダプタメソッドがある
+
+reader.bytes():
+入力ストリーム上のバイトに対するイテレータを返す
+→アイテムの型はio::Result<u8>
+→→このイテレータはreader.read()を一バイトごとに呼び出す
+
+reader.chars():
+バイトではなく文字を生成するイテレータを返す
+
+reader.chain(reader2):
+readerからの入力の後にreader2からの入力を続けて出力する新たなreaderを返す
+
+readerをクローズするメソッドはない
+→多くの場合実装されたDropで自動的にクローズされる
+
+18.1.2 バッファ付きreader
 
 
 
