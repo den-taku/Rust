@@ -191,7 +191,23 @@ File::create(filename):
 
 18.1.7 シーク
 
+Seekトレイト
+→最初から終わりに向かって読み書きするだけでなくあちこちを移動することができる
 
+pub trait Seek {
+    fn seek(&mut self, pos: SeekFrom) -> io::Result<u64>;
+}
+pub enum SeekFrom {
+    Start(u64),
+    End(i64),
+    Current(i64)
+}
+
+seek(SeekFrom::Start(0))やseek(SeekFrom::Current(-8))のようにかく
+
+ファイル内のシークは遅い
+
+18.1.8 他のreader型、writer型
 
 
 
