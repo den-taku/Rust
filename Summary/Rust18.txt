@@ -347,6 +347,24 @@ path.display():
 
 18.2.4 ディレクトリの読み出し
 
+ディレクトリの内容をリストアップする
+→std::fs::read_dirを用いる(Pathの.read_dir()でも同じ)
+
+entryの型はstd::fs::DirEntry
+
+entry.file_name():
+ファイル名かディレクトリ名をOsStringで返す
+
+entry.path():
+元のパスをつなげてPathBafとして返す
+
+entry.file_type():
+io::Result<FileType>型の値を返す
+
+entry.metadata():
+このエントリに関するその他のメタデータを取得する
+
+18.2.5 プラットフォーム固有機能
 
 
 
