@@ -129,6 +129,16 @@ Rustのチャネルは値を移動する
 
 19.2.1 値の送信
 
+channelはstd::sync::mpscモジュールの一部
+
+channel()は値のペア(sender, receiver)を返す
+→それぞれ型はSender<T>、Receiver<T>になる
+
+sendメソッドとrecvメソッドはResultを返す
+→失敗するのはチャネルの相手がドロップされた時だけ
+
+19.2.2 値の受信
+
 
 
 
