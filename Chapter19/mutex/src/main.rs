@@ -1,5 +1,7 @@
 use std::sync::Mutex;
 use std::sync::Arc;
+use std::sync::RwLock;
+use std::io;
 
 type PlayerId = u32;
 
@@ -9,7 +11,8 @@ const GAME_SIZE: usize = 8;
 type WaitingList = Vec<PlayerId>;
 
 struct FernEmpireApp {
-    waiting_list: Mutex<WaitingList>
+    waiting_list: Mutex<WaitingList>,
+    config: RwLock<AppConfig>
 }
 
 impl FernEmpireApp {
@@ -27,6 +30,19 @@ impl FernEmpireApp {
             drop(guard);
             self.start_game(player);
         }
+    }
+
+    /// True if ecperimental fungus code should be used.
+    fn mushrooms_enable(&self) -> bool {
+        let config_guard = self.config.read().unwrap();
+        config_guard.mashrooms_enabled
+    }
+
+    fn reload_config(&self) -> io::Result<()> {
+        let new_config = AppConfig::load()?;
+        let mut config_guard = self.config.write().unwrap();
+        *config_guard = new_config;
+        Ok(())
     }
 }
 
