@@ -12,6 +12,10 @@ macro_rules! assert_eq2 {
     });
 }
 
+// macro_rules! STAY {
+//     (tmp: i32) => ( tmp );
+// }
+
 /*hoge*/
 
 // fn hoge(expr: expr) -> () {
@@ -22,4 +26,5 @@ fn main() {
     assert_eq2!(1,2);
     assert_eq!(1,2);
     println!("Hello, world!");
+    // println!("{}", STAY!(89_i32));
 }
