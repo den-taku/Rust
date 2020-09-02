@@ -14,6 +14,10 @@ macro_rules! assert_eq2 {
 
 /*hoge*/
 
+// fn hoge(expr: expr) -> () {
+//     expr;
+// }
+
 fn main() {
     assert_eq2!(1,2);
     assert_eq!(1,2);
