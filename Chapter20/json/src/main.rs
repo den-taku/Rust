@@ -9,10 +9,17 @@ macro_rules! json {
     ([ $( $element:tt ),* ]) => {
         Json::Array(vec![ $( json!($element) ),* ])
     };
-    ({ $( $key:tt : $value:tt ),* }) => {
-        Json::Object(Box::new(vec![
-            $( ($key.to_string(), json!($value)) ),*
-        ].into_iter().collect()))
+    // ({ $( $key:tt : $value:tt ),* }) => {
+    //     Json::Object(Box::new(vec![
+    //         $( ($key.to_string(), json!($value)) ),*
+    //     ].into_iter().collect()))
+    // };
+    ({ $($key:tt : $value:tt),* }) => {
+        {
+            let mut fields = Box::new(HashMap::new());
+            $( fields.insert($key.to_string(), json!($value)); )*
+            Json::Object(fields)
+        }
     };
     ($other:tt) => {
         Json::from($other) // Handle Boolean/number/string
@@ -99,4 +106,11 @@ fn main() {
             "height": (width * 9.0 / 4.0)
         });
     println!("{:#?}", desc);
+
+    let fields = "Fields, W.C.";
+    let role = json!({
+        "name": "Larson E. Whipsnade",
+        "actor": fields
+    });
+    println!("{:#?}", role);
 }
