@@ -1,0 +1,4 @@
+{
+    println!("HOGE~!");
+    println!("HUGA~!");
+}
