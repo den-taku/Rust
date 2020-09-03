@@ -133,7 +133,7 @@ include_bytes!("file.dat"):
 全てのマクロを展開したコードを表示するようにrustcに指定できる
 →Nightly Rustでしか使えない
 
-・rustup override add nightly
+・rustup override add nightly (rustup ovverride set nightlyでもいけそう)
 ・cargo build --verboseでrustcのオプションを確認する
 ・-Z unstable-options --pretty expandedを追加する
 
@@ -147,14 +147,34 @@ trace_macros!(true)をどこかに書いておけば全てのマクロ呼び出�
 
 20.4 json!マクロ
 
+ここではマクロ開発の仕方とmacro_rules!の未説明部分を説明していく
 
+20.4.1 フラグメント型
 
+複雑なマクロを書くときに最初にすること
+→想定する入力に対してマッチもしくパースする方法を見つけること
 
+exprはRust式とマッチするので独自定義型はマッチしない
 
+macro_rules!でサポートされているフラグメント型(詳細はp495の表20-1)
 
+expr  式
+stmt  式もしくは宣言。最後のセミコロンは含まない
+ty    型
+path  パス
+pat   パターン
+item  アイテム
+block ブロック
+meta  属性のボディ部
+ident 識別子
+tt    トークンツリー
 
+ほとんどのフラグメント型はRust構文に厳密に従い拡張できない
+→identとttはRustコードに見えないようなマクロ引数にもマッチする
 
+各フラグメントに対してその直後に現れる事のできるトークンは制限されている
 
+20.4.2 マクロ中の再帰
 
 
 
