@@ -126,6 +126,26 @@ include_bytes!("file.dat"):
 
 20.3 マクロのデバッグ
 
+マクロのデバッグは大変
+→マクロの問題を解決する際に利用できる3つの道具ある
+
+1.
+全てのマクロを展開したコードを表示するようにrustcに指定できる
+→Nightly Rustでしか使えない
+
+・rustup override add nightly
+・cargo build --verboseでrustcのオプションを確認する
+・-Z unstable-options --pretty expandedを追加する
+
+2.
+log_syntax!()マクロを使う
+→コンパイル時に引数を端末に表示する
+→→機能フラグ#![feature(log_syntax)]が必要
+
+3.
+trace_macros!(true)をどこかに書いておけば全てのマクロ呼び出しを表示する
+
+20.4 json!マクロ
 
 
 
