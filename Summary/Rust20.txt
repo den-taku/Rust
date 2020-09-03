@@ -235,6 +235,13 @@ $crate::Jsonや$crate::macro::HashMapのようにかける
 
 20.6 macro_rules!の先
 
+複雑なマクロは簡単には扱えない
+
+「The Little Book of Rust Macros」は高度なmacro_rules!に関する良いハンドブック
+
+手続きマクロ(procedural macros)
+→#[derive]属性を拡張して自動実装をカスタマイズできる
+→→詳しくはオンラインドキュメントを参照
 
 
 
