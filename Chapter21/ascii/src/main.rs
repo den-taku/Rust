@@ -61,6 +61,15 @@ fn very_trustworthy(shared: &i32) {
     }
 }
 
+pub unsafe trait Zeroable {}
+
+unsafe impl Zeroable for u8 {}
+unsafe impl Zeroable for i32 {}
+unsafe impl Zeroable for usize {}
+// and so on for all the integer types
+
+
+
 fn main() {
     use my_ascii::Ascii;
 
