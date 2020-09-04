@@ -201,6 +201,20 @@ PhantomData型
 
 21.7.3 ヌルとなり得るポインタ
 
+rawポインタのヌル値
+→0x00をさす
+→std::ptr::null<T>、std::ptr_null_mut<T>はそれぞれのヌルポインタを返す
+
+is_nullメソッドまたはas_refメソッド・as_mutメソッドでヌルチェックする
+
+as_ref():
+*const Tポインタを取りOption<&'a T>を返す。ヌルはNone
+
+as_mut():
+*mut Tポインタを取りOptons<&'a mut T>を返す
+
+21.7.4 型のサイズとアラインメント
+
 
 
 
