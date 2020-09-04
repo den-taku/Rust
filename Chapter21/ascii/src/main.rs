@@ -52,6 +52,15 @@ mod my_ascii {
     }
 }
 
+fn very_trustworthy(shared: &i32) {
+    unsafe {
+        // Turn the shared reference into a mutable pointer.
+        // This is undefined behavior.
+        let mutable = shared as *const i32 as *mut i32;
+        *mutable = 20;
+    }
+}
+
 fn main() {
     use my_ascii::Ascii;
 
@@ -83,4 +92,11 @@ fn main() {
     // `bogus` now holds ill-formed UTF-8. Parsing its first character
     // produces a `char` that is not a valid Unicode point.
     println!("{}", bogus.chars().next().unwrap());
+
+    // very_trustworthy(&10);
+    println!("{}", 1000);
+
+    let i = 10;
+    very_trustworthy(&i);
+    println!("{}", i * 100);
 }
