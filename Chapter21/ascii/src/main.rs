@@ -19,6 +19,22 @@ mod my_ascii {
             }
             Ok(Ascii(bytes))
         }
+
+        /// Construsct an `Ascii` value from `bytes`, without checking
+        /// whether `bytes` actually contains well-formed ASCII.
+        /// 
+        /// This constructor is infallible, and returns an `Ascii` directly,
+        /// rather than a `Result<Ascii, NotAsciiError>` as the `from_bytes`
+        /// constructor does.
+        /// 
+        /// # Safety
+        /// 
+        /// The caller must ensure that `bytes` contains only ASCII
+        /// characters: bytes no greater than 0x7f. Otherwise, the effect is undefined.
+        /// 
+        pub unsafe fn from_bytes_unchecked(bytes: Vec<u8>) -> Ascii {
+            Ascii(bytes)
+        }
     }
 
     // When conversion fails, we gibe back the vector we couldn't convert.
@@ -51,4 +67,20 @@ fn main() {
     println!("{}", string);
 
     println!("Hello, world!");
+
+    // Imagine that this vector is the result of some complicated process
+    // that we expected to produce ASCII. Something went wrong!
+    let bytes = vec![0xf7, 0xbf, 0xbf, 0xbf];
+
+    let ascii = unsafe {
+        // This unsafe function's contract is violated
+        // when `bytes` holds non-ASCII bytes.
+        Ascii::from_bytes_unchecked(bytes)
+    };
+
+    let bogus: String = ascii.into();
+
+    // `bogus` now holds ill-formed UTF-8. Parsing its first character
+    // produces a `char` that is not a valid Unicode point.
+    println!("{}", bogus.chars().next().unwrap());
 }
