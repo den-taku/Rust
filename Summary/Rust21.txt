@@ -242,9 +242,43 @@ unsized型はサイズとアラインメントが個々の値に依存する
 
 21.7.6 メモリに移動、メモリから移動
 
+メモリを管理する型を実装する
+→メモリのどの部分が生きている値を指していてどこが未初期化かを管理する必要がある
 
+ベクタがヒープ上の値などを保持する場合、中身までは連続したメモリ領域にあるとは限らない
 
+初期化済みの値の定義
+→生きているものとして扱われているかどうか
 
+std::ptr::read(src):
+srcが指す場所から値を移動し呼び出し元に所有権を移動する
+→src仮引数はT:Sizedに対するrawポインタ*const T
+
+std::ptr::write(dest, value):
+destが指す場所にvalueを移動する
+→deat仮引数はT:Sizedに対するrawポインタ*mut T、valueはTの値
+
+これらの操作は安全なポインタ型では実装できない
+
+これらはいずれも自由関数(rawポインタのメソッドではない)
+
+std::ptr::copy(src, dst, count):
+srcから始まるメモリ領域にあるcount個の配列をdstに移動する
+→src: *const T、dst: *mut Tでcount: usizeである
+
+std::ptr::copy_nonoverlapping(src, dst, count):
+copyと同様だが2つのメモリ領域が重なっていない時にしか使えず高速
+
+次に示す関数はstd::ptrモジュールに含まれている
+
+read_unaligneed、write_unaligned:
+参照先の型が要請するアライメントをポインタが満たさなくても動作するreadとwrite
+→通常のreadやwriteより低速である可能性がある
+
+read_volatile、write_volatile:
+CとC++のvolatile読み出し、書き込みと同じように機能する
+
+21.7.7 例:GapBuffer
 
 
 
