@@ -1,3 +1,16 @@
+// struct Iter<'a, T: 'a>{
+//     ptr: *const T, // 次に生成する要素
+//     end: *const T, // 終端
+// }
+
+// fn offset(self: *const T, count: isize) -> *const T
+//     where T: Sized
+// {
+//     let bytes_per_element = std::mem::size_of::<T>() as isize;
+//     let byte_offset = count * bytes_per_element;
+//     (self as isize).checked_add(byte_offset).unwrap() as *const T
+// }
+
 fn main() {
     println!("std::mem::size_of::<i64>  : {}", std::mem::size_of::<i64>());
     println!("std::mem::align_of::<i64> : {}", std::mem::align_of::<i64>());
