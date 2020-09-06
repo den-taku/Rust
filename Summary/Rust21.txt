@@ -301,7 +301,47 @@ Emacs
 
 21.8.1 共通のデータ表現を見つける
 
+機械語レベルで考えて共通点を考える
+→std::os::rawモジュールがCの特定の型と同じ表現になることが保証されているRustの型を定義
 
+[C]                         [Rust]
+short                       c_short
+int                         c_int
+long                        c_long
+long long                   c_longlong
+unsigned short              c_ushort
+unsigned, unsigned int      c_uint
+unsigned long               c_ulong
+unsigned long long          c_ulonglong
+char                        c_char
+signed char                 c_schar
+unsigned char               c_uchar
+float                       c_float
+double                      c_double
+void *, const void *        *mut c void, *const c void
+
+c_void以外は全て基本型の別名
+boolに対応する型として推奨されているものはない
+Rustの32bit-charはwchar_tに対応しない
+usizeとisizeはsize_tとptrdiff_tと同じ表現
+ポインタはrawポインタと対応
+
+Cの構造体と互換性を持つRustの構造体を定義するには#[repr(C)]属性を用いる
+→構造体のfieldをCコンパイラが対応する構造体を配置するのと同じように配置する
+→→構造体のレイアウトだけに影響
+
+#[repr(C)]はCスタイルの列挙型の表現にも使える
+→#[repr(i16)]のように16bit整数を使うように指定することができる
+
+RustとCで文字列を交換するのは難しい
+→std::ffiにはCStringとCStrが定義されている
+
+CString、CStr
+→ヌル文字で終端されたバイト配列の所有型と借用型
+→→ごくわずかなメソッドしか定義されていない
+→→→詳細は次の章で実際に使いながら説明する
+
+21.8.2 外部言語関数、変数の宣言
 
 
 
