@@ -264,7 +264,7 @@ cmp: Fn(&T, &T) -> std::cmp::Ordering
 
 slice.sort_by_key(key):
 keyを用いて得られたソートキーの昇順でソートする
-key: Fn(&T) -> K where F:Ord
+key: Fn(&T) -> K where K:Ord
 →ソートキーの値はキャッシュされないことに注意
 →keyは要素から借用した参照を返すことができない(生存期間が推論できない)
 
@@ -380,7 +380,7 @@ Rust1.17の時点ではまだAPIが未完成
 
 LinkedListがVecDequeよりも優れている点:
 2つのリストの連結がとても高速(いくつかのポインタの書き換えだけで実現できる)
-→lest.append(&mut list2)
+→list.append(&mut list2)
 
 16.5 BinaryHeap<T>
 
@@ -403,7 +403,7 @@ BinaryHeapはVecのメソッドの一部をサポートしている
 組み込みトレイトのOrdを実装した任意の型に使える
 →タスクキューを作るのに適している(タスク構造体を定義すれば良い)
 
-BinaryHeapはイテレート可能だが大きい順で返すとじゃ限らない
+BinaryHeapはイテレート可能だが大きい順で返すとは限らない
 →while let Some(task) = heap.pop()で回せば良い
 
 16.6 HashMap<K, V>とBTreeMap<K, V>
@@ -552,7 +552,7 @@ iter.collect():
 任意のイテレータから新しいセットを作る(重複valueはドロップ)
 
 HashSet::with_capacity(n):
-少なくともnこの要素を追加できるヒープ領域を持った空のセットを作る
+少なくともn個の要素を追加できるヒープ領域を持った空のセットを作る
 
 set.len():
 要素数を返す
