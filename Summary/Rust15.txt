@@ -24,7 +24,7 @@ std::iter::Iteratorトレイトを実装する値
 
 trait Iterator {
     type Item;
-    fn next(&mut self) -> ->Option<Self::Item>;
+    fn next(&mut self) ->Option<Self::Item>;
     ... // many default methods
 }
 
