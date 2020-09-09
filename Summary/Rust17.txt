@@ -31,7 +31,7 @@ Stringやstr型
 →テキストをUTF-8形式で表現する
 
 UTF-8
-→一文字を1Byteから4バイトの列にエンコードする
+→一文字を1Byteから4Byteの列にエンコードする
 
 UTF-8が整形式(well-formed)であるための制約
 ・全てのコードポイントに対して最短のエンコーディングだけが整形式
@@ -188,7 +188,7 @@ stringの末尾にchを追加
 string.push_str(slice):
 sliceを全て末尾に追加
 
-slring.extend(iter):
+string.extend(iter):
 イテレータのアイテムをstringに追加
 →std::iter::Extendの実装によるもの
 
@@ -214,7 +214,7 @@ string.clear():
 stringを空にする
 
 string.trucate(n):
-バイトオフセットn以降の持っ寺を全て捨てる
+バイトオフセットn以降の文字を全て捨てる
 
 string.pop():
 最後の文字があれば削除して返す
