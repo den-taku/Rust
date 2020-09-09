@@ -130,7 +130,7 @@ readerのメソッドのうちいくつかはResultを生成するイテレー�
 
 一番簡単な方法はforループ中でアイテムを1つずつ処理
 
-collectを使うことだができる
+collectを使うことができる
 →reader.hoge().collect::<io::Result<Vec<T>>>()?;
 →→Resultに対するFromIteratorの実装が含まれているため可能
 
