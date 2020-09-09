@@ -13,6 +13,9 @@ struct UnsizedStructure {
 fn main() {
     println!("Hello, world!");
     let s: &str = "hoge";
-    let a: &UnsizedStructure = 
-        &UnsizedStructure { field1: 32, field2: *hoge };
+    unsafe {
+        let a: &UnsizedStructure = 
+            &UnsizedStructure { field1: 32, field2: *hoge };
+    }
+    println!("{}", std::mem::size_of_val(s));
 }
