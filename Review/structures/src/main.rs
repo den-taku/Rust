@@ -8,7 +8,7 @@ trait Battle {
     fn check_hp(&self) -> bool;
 }
 
-trait Movable {
+trait Movable : HaveParameter {
     fn move_position(&mut self, x: f32, y: f32, z: f32);
 }
 
